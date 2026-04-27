@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Реферальный маркетинг — слайд</title>
+  <style>
+    :root {
+      --bg0: #0c1220;
+      --bg1: #141d2f;
+      --card: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f0f4fa;
+      --muted: #8b9bb8;
+      --accent: #ff8c42;
+      --accent2: #4ecdc4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(1200px 800px at 20% 10%, #1a2840 0%, transparent 55%),
+        radial-gradient(900px 600px at 90% 80%, #0d3d35 0%, transparent 50%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      padding: 2rem;
+    }
+
+    .slide {
+      width: min(1120px, 100%);
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(1.5rem, 3vw, 2.75rem) clamp(1.75rem, 4vw, 3.25rem);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.35rem, 2.8vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    header p {
+      margin-top: 0.35rem;
+      font-size: clamp(0.85rem, 1.35vw, 0.98rem);
+      color: var(--muted);
+      max-width: 52ch;
+    }
+
+    .grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(0.75rem, 2vw, 1.1rem);
+      min-height: 0;
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: clamp(1rem, 2.2vw, 1.35rem) clamp(1rem, 2.5vw, 1.5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .card .num {
+      font-size: clamp(1.75rem, 4.2vw, 2.65rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .card .num span {
+      color: var(--accent);
+    }
+
+    .card:nth-child(2) .num span {
+      color: var(--accent2);
+    }
+
+    .card:nth-child(3) .num span {
+      color: #a78bfa;
+    }
+
+    .card:nth-child(4) .num span {
+      color: #f472b6;
+    }
+
+    .card h2 {
+      font-size: clamp(0.82rem, 1.25vw, 0.95rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .card p {
+      font-size: clamp(0.72rem, 1.05vw, 0.82rem);
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    footer {
+      font-size: clamp(0.65rem, 0.95vw, 0.72rem);
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 0.85rem;
+      line-height: 1.5;
+    }
+
+    footer a {
+      color: #b8c8e6;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <article class="slide" aria-label="Слайд презентации">
+    <header>
+      <h1>Реферальные программы: что показывают данные 2025–2026</h1>
+      <p>Ориентиры для продукта и маркетинга — e-commerce и массовый потребительский рынок.</p>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <div class="num"><span>44%</span></div>
+        <h2>Мотивация «приведи друга»</h2>
+        <p>Почти половина потребителей вступает в реферальные программы в первую очередь ради наград; часть воздерживается из страха «надоедать» друзьям ссылками.</p>
+      </section>
+
+      <section class="card">
+        <div class="num"><span>75%</span> / <span>29%</span></div>
+        <h2>Использование рефкодов</h2>
+        <p>Три четверти пользуются рефкодами хотя бы иногда; около трети — часто. Среди 18–35 активность особенно высокая: до ~80% используют рефкоды.</p>
+      </section>
+
+      <section class="card">
+        <div class="num"><span>3–5%</span> · <span>8%+</span></div>
+        <h2>Конверсия по рефералке в ритейле</h2>
+        <p>Средний CR по реферальной ссылке в интернет-магазинах — ориентир 3–5%; сильные программы выходят на 8% и выше (зависит от ниши и условий).</p>
+      </section>
+
+      <section class="card">
+        <div class="num"><span>65%</span></div>
+        <h2>Двусторонние бонусы</h2>
+        <p>Большинству важно, чтобы выигрывали и пригласивший, и новый клиент. Прозрачные условия и удобный шаринг снижают типичные боли: низкая награда, сложный трекинг, мало каналов «поделиться».</p>
+      </section>
+    </div>
+
+    <footer>
+      Источники: обзор статистики referral marketing (Cropink, 2026; в т.ч. данные Impact, Nielsen и др.) —
+      <a href="https://cropink.com/referral-marketing-statistics" target="_blank" rel="noopener">cropink.com/referral-marketing-statistics</a>;
+      бенчмарки CR по рефералке для e-commerce (CPALENTA, 2025) —
+      <a href="https://cpalenta.ru/kakoy-horoshiy-protsent-konversii-po-referalke-v-2025-godu/" target="_blank" rel="noopener">cpalenta.ru</a>.
+    </footer>
+  </article>
+</body>
+</html>

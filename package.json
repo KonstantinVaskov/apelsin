@@ -1,0 +1,13 @@
+{
+  "name": "deadline-apelsinka",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Корень репозитория: Next.js-приложение в папке apelsin",
+  "scripts": {
+    "postinstall": "npm install --prefix apelsin",
+    "dev": "npm run dev --prefix apelsin",
+    "build": "npm run build --prefix apelsin",
+    "start": "npm run start --prefix apelsin",
+    "lint": "npm run lint --prefix apelsin"
+  }
+}

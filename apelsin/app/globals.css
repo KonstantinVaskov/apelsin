@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 20% 98%;
+  --foreground: 0 0% 10%;
+  --border: 214 32% 91%;
+  --radius: 1rem;
+  --font-app: "Segoe UI Variable Text", "Segoe UI", "SF Pro Text", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+.dark {
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --border: 217 33% 17%;
+}
+
+body {
+  @apply bg-[#F8F9FA] text-[#1A1A1A] antialiased;
+  font-family: var(--font-app);
+  font-optical-sizing: auto;
+}
+
+.dark body {
+  @apply bg-zinc-950 text-zinc-100;
+}
+
+/* Custom scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300/80;
+}
+
+.glass {
+  @apply border border-white/40 bg-white/70 shadow-card backdrop-blur-xl;
+}
+
+.dark .glass {
+  @apply border-white/10 bg-zinc-900/70;
+}
+
+.gradient-hero {
+  background: linear-gradient(
+    135deg,
+    #fff0e5 0%,
+    #ffe4d4 35%,
+    #fff8f3 70%,
+    #f8f9fa 100%
+  );
+}
+
+.dark .gradient-hero {
+  background: linear-gradient(135deg, #1c1917 0%, #292524 50%, #18181b 100%);
+}
+
+/* страница семьи: холодная подложка */
+.family-page,
+.squad-page {
+  background-color: #e8edf3;
+  background-image: repeating-linear-gradient(
+      105deg,
+      transparent,
+      transparent 11px,
+      rgba(51, 65, 85, 0.045) 11px,
+      rgba(51, 65, 85, 0.045) 12px
+    ),
+    linear-gradient(175deg, #eef2f7 0%, #e4e9f0 45%, #dde4ee 100%);
+}
