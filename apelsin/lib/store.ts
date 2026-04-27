@@ -4,7 +4,7 @@ import {
   FAMILY_SPEND_PER_MEMBER_THRESHOLDS_RUB,
   MAX_FAMILY_MEMBERS,
 } from "@/lib/constants";
-import { getDiskFamilies, replaceDiskFamilies } from "@/lib/apelsin-disk";
+import { diskResetAllData, getDiskFamilies, replaceDiskFamilies } from "@/lib/apelsin-disk";
 import { formatBankPersonName } from "@/lib/person-name";
 import { generateId } from "@/lib/utils";
 import {
@@ -139,6 +139,15 @@ export function initFamiliesFromDisk(): void {
     families.set(f.id, { ...f, closedToJoins: f.closedToJoins ?? false });
     codeToFamilyId.set(f.inviteCode, f.id);
   }
+}
+
+export function resetDemoState(): void {
+  users.clear();
+  loginNormToUserId.clear();
+  families.clear();
+  codeToFamilyId.clear();
+  memInitG.__families_hydrated = 0;
+  diskResetAllData();
 }
 
 function saveFamiliesToDisk() {

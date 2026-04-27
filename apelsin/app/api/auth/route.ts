@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ensurePersistence } from "@/lib/apelsin-disk";
-import { getUserById, getUserPublic, initFamiliesFromDisk, registerUser, verifyLogin } from "@/lib/store";
+import { getUserById, getUserPublic, initFamiliesFromDisk, registerUser, resetDemoState, verifyLogin } from "@/lib/store";
 import { getSessionUserId } from "@/lib/session";
 import { COOKIE_MAX_AGE_SEC, SESSION_COOKIE } from "@/lib/constants";
 
@@ -28,11 +28,12 @@ export async function GET() {
 }
 
 type PostBody = {
-  action?: "register" | "login" | "logout";
+  action?: "register" | "login" | "logout" | "reset_demo_data";
   login?: string;
   password?: string;
   firstName?: string;
   lastName?: string;
+  resetCode?: string;
 };
 
 export async function POST(req: Request) {
@@ -48,6 +49,16 @@ export async function POST(req: Request) {
 
     ensurePersistence();
     initFamiliesFromDisk();
+
+    if (action === "reset_demo_data") {
+      if (body.resetCode !== "RESET_APELSIN_DEMO") {
+        return NextResponse.json({ error: "forbidden" }, { status: 403 });
+      }
+      resetDemoState();
+      const res = NextResponse.json({ ok: true });
+      res.cookies.delete(SESSION_COOKIE);
+      return res;
+    }
 
     const login = String(body.login ?? "");
     const password = String(body.password ?? "");

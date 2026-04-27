@@ -153,6 +153,11 @@ export function ensurePersistence(): void {
   }
 }
 
+export function diskResetAllData(): void {
+  g.__apelsin_disk = { v: 2, users: [], families: [], activity: [], nextActivityId: 1 };
+  save();
+}
+
 export function getDiskFamilies(): StoredFamily[] {
   return getRoot().families.slice();
 }
