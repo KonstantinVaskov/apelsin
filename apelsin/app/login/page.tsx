@@ -77,7 +77,7 @@ function LoginForm() {
     }
   }
 
-  async function demoLogin() {
+  async function quickLogin() {
     setMsg(null);
     setBusy(true);
     try {
@@ -86,16 +86,16 @@ function LoginForm() {
         method: "POST",
         body: JSON.stringify({
           action: "register",
-          login: `demo${suffix}@apelsin.test`,
+          login: `user${suffix}@apelsin.app`,
           password: "Demo1234",
-          firstName: "Демо",
+          firstName: "Новый",
           lastName: "Участник",
         }),
       });
       await goNext();
     } catch (e) {
       const key = e instanceof ApiError ? (e.code ?? e.message) : e instanceof Error ? e.message : "";
-      setMsg(errRu[key] ?? "Не получилось открыть демо. Обновите страницу и попробуйте ещё раз.");
+      setMsg(errRu[key] ?? "Не получилось войти. Обновите страницу и попробуйте ещё раз.");
     } finally {
       setBusy(false);
     }
@@ -115,20 +115,20 @@ function LoginForm() {
             <ShieldCheck className="h-5 w-5 text-orange-200" />
           </div>
           <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-orange-100/80">
-            demo access
+            online access
           </div>
         </div>
         <h1 className="max-w-xs text-3xl font-black leading-[0.95] tracking-[-0.06em]">
-          Быстрый вход для защиты
+          Быстрый вход в Апельсин
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-orange-50/70">
-          Лучший сценарий для показа: один клик, новый демо-профиль и сразу экран семьи.
+          Один клик — новый профиль и сразу экран семьи.
         </p>
       </div>
 
-      <Button type="button" size="lg" className="mb-5 w-full" disabled={busy} onClick={() => void demoLogin()}>
+      <Button type="button" size="lg" className="mb-5 w-full" disabled={busy} onClick={() => void quickLogin()}>
         <Sparkles className="h-5 w-5" />
-        Войти в демо за 1 клик
+        Войти за 1 клик
         <ArrowRight className="h-5 w-5" />
       </Button>
 

@@ -268,7 +268,7 @@ export function FamilyClient() {
       <p className="mb-3 text-sm font-medium leading-relaxed text-orange-50/70">Семейный счёт, уровень кэшбэка и бонусы для всех.</p>
       <details className="mb-5 rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-xs text-orange-50/70 shadow-premium backdrop-blur-xl">
         <summary className="cursor-pointer list-none font-semibold text-orange-50 outline-none marker:hidden [&::-webkit-details-marker]:hidden">
-          <span className="underline decoration-orange-200/30 underline-offset-2">Подробности и демо</span>
+          <span className="underline decoration-orange-200/30 underline-offset-2">Как работает программа</span>
         </summary>
         <p className="mt-2 border-t border-white/10 pt-2 leading-relaxed">
           Создайте семью, пригласите участников и суммируйте покупки. Уровень считается по средним тратам на человека:
@@ -295,7 +295,7 @@ export function FamilyClient() {
           onDemoResetFull={() => {
             if (
               window.confirm(
-                "Сбросить демо целиком: твои траты → 0 и выкинуть накрученных демо-участников? Реальные люди в семье не трогаются."
+                "Сбросить тестовые данные: ваши траты → 0 и убрать тестовых участников? Реальные люди в семье не трогаются."
               )
             ) {
               void post({ action: "demo_reset" });
@@ -435,7 +435,7 @@ function FamilyView({
                 />
               </>
             ) : (
-              <p className="mt-4 text-xs font-semibold text-orange-100">Семья достигла верхнего уровня в демо</p>
+              <p className="mt-4 text-xs font-semibold text-orange-100">Семья достигла верхнего уровня</p>
             )}
             <p className="mt-4 flex items-start gap-2 rounded-2xl border border-white/10 bg-white/10 p-3 text-sm font-medium leading-snug text-orange-50/90 backdrop-blur">
               <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-orange-200" />
@@ -478,7 +478,7 @@ function FamilyView({
                   ) : null}
                   {fake ? (
                     <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-orange-100/70">
-                      демо
+                      тест
                     </span>
                   ) : null}
                 </div>
@@ -545,7 +545,7 @@ function FamilyView({
           <span>
             Тестовые действия{" "}
             <span className="rounded-full bg-orange-200/15 px-1.5 py-0.5 text-[9px] font-mono font-bold normal-case tracking-normal text-orange-100">
-              демо
+              тест
             </span>
           </span>
           <span className="text-orange-100/50 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
@@ -564,7 +564,7 @@ function FamilyView({
                 onChange={(e) => setQrAmount(e.target.value)}
               />
               <p className="mt-1 text-[10px] leading-relaxed text-orange-50/55">
-                В демо вы задаёте сумму сами. В продукте она придёт из данных банка по факту покупки. Сумма добавляется
+                Здесь можно задать сумму вручную. В продукте она придёт из данных банка по факту покупки. Сумма добавляется
                 к вашим личным тратам за месяц и учитывается в семейном счёте.
               </p>
             </div>
@@ -587,7 +587,7 @@ function FamilyView({
             </Button>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               <Button type="button" variant="secondary" className="h-10 gap-1 font-semibold" disabled={busy} onClick={onDemoPeers}>
-                +3 демо-участника
+                +3 тестовых участника
               </Button>
               <Button
                 type="button"
@@ -607,7 +607,7 @@ function FamilyView({
               onClick={onDemoResetFull}
             >
               <RotateCcw className="h-4 w-4" />
-              Сбросить демо целиком
+              Сбросить тестовые данные
             </Button>
           </div>
           <p className="mt-2 text-[11px] leading-relaxed text-orange-50/55">

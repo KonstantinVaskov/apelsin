@@ -39,7 +39,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="rounded-full border border-primary/20 bg-white/70 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-primary shadow-sm backdrop-blur-xl">
-            demo
+            online
           </div>
         </motion.header>
 
@@ -51,7 +51,7 @@ export default function LandingPage() {
           className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/70 bg-white/65 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-primary shadow-sm backdrop-blur-xl"
         >
           <Sparkles className="h-3.5 w-3.5" />
-          защита-ready прототип
+          семейная бонусная программа
         </motion.div>
 
         <motion.h1
@@ -138,13 +138,13 @@ export default function LandingPage() {
         <motion.div custom={5} initial="initial" animate="animate" variants={fadeUp} className="mt-auto">
           <Button asChild size="lg" className="w-full text-base">
             <Link href="/login?next=/family">
-              Открыть демо
+              Открыть Апельсин
               <ArrowRight className="h-5 w-5" />
             </Link>
           </Button>
           <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-[11px] font-medium text-zinc-500">
             <Crown className="h-3.5 w-3.5 text-primary" />
-            На защите жмите “Войти в демо за 1 клик”
+            Создайте семью и пригласите участников по коду
           </p>
         </motion.div>
       </div>
