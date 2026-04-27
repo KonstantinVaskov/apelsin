@@ -37,6 +37,11 @@ function LoginForm() {
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
+  async function goNext() {
+    router.replace(next);
+    router.refresh();
+  }
+
   async function submit() {
     setMsg(null);
     setBusy(true);
@@ -59,14 +64,37 @@ function LoginForm() {
               }
         ),
       });
-      router.replace(next);
-      router.refresh();
+      await goNext();
     } catch (e) {
       const key = e instanceof ApiError ? (e.code ?? e.message) : e instanceof Error ? e.message : "";
       setMsg(
         errRu[key] ??
           (key && key.length < 200 ? key : "Неизвестная ошибка — обнови страницу (Ctrl+Shift+R)")
       );
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function demoLogin() {
+    setMsg(null);
+    setBusy(true);
+    try {
+      const suffix = `${Date.now()}${Math.floor(Math.random() * 1000)}`;
+      await apiJson<{ ok: boolean }>("/api/auth", {
+        method: "POST",
+        body: JSON.stringify({
+          action: "register",
+          login: `demo${suffix}@apelsin.test`,
+          password: "Demo1234",
+          firstName: "Демо",
+          lastName: "Участник",
+        }),
+      });
+      await goNext();
+    } catch (e) {
+      const key = e instanceof ApiError ? (e.code ?? e.message) : e instanceof Error ? e.message : "";
+      setMsg(errRu[key] ?? "Не получилось открыть демо. Обновите страницу и попробуйте ещё раз.");
     } finally {
       setBusy(false);
     }
@@ -157,6 +185,9 @@ function LoginForm() {
           </div>
           <Button type="button" className="w-full" disabled={busy} onClick={() => void submit()}>
             {busy ? "…" : mode === "register" ? "Создать аккаунт" : "Войти"}
+          </Button>
+          <Button type="button" variant="secondary" className="w-full" disabled={busy} onClick={() => void demoLogin()}>
+            Войти в демо за 1 клик
           </Button>
         </CardContent>
       </Card>
