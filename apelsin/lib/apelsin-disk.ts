@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 
 /** Локальное хранилище: users + families + activity в одном JSON. */
@@ -52,7 +53,8 @@ function getRoot(): RootV2 {
 }
 
 function dataPath() {
-  return path.join(process.cwd(), ".data", DATA_FILE);
+  const baseDir = process.env.VERCEL ? os.tmpdir() : path.join(process.cwd(), ".data");
+  return path.join(baseDir, DATA_FILE);
 }
 
 function save() {
@@ -133,7 +135,7 @@ function migrateLegacyFile(raw: string): RootV2 {
 
 export function ensurePersistence(): void {
   if (g.__apelsin_disk) return;
-  const dir = path.join(process.cwd(), ".data");
+  const dir = path.dirname(dataPath());
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   const p = dataPath();
   if (fs.existsSync(p)) {
