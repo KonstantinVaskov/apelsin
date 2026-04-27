@@ -239,18 +239,18 @@ export function FamilyClient() {
     <MobileShell className="family-page">
       <div className="mb-3 flex items-start justify-between gap-2">
         <p className="mb-2">
-          <Link href="/" className="text-sm text-zinc-600 underline decoration-zinc-300 underline-offset-4 hover:text-primary">
+          <Link href="/" className="text-sm font-medium text-orange-100/70 underline decoration-orange-200/30 underline-offset-4 hover:text-orange-100">
             ← На главную
           </Link>
         </p>
-        <div className="text-right text-xs text-zinc-600">
-          <p className="max-w-[14rem] truncate text-[11px] font-semibold leading-tight text-zinc-800">
+        <div className="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-right text-xs text-orange-50/70 backdrop-blur-xl">
+          <p className="max-w-[14rem] truncate text-[11px] font-semibold leading-tight text-white">
             {formatBankPersonName(me)}
           </p>
-          <p className="max-w-[14rem] truncate font-mono text-[10px] text-zinc-500">{me.login}</p>
+          <p className="max-w-[14rem] truncate font-mono text-[10px] text-orange-100/50">{me.login}</p>
           <button
             type="button"
-            className="mt-0.5 inline-flex items-center gap-1 text-zinc-500 hover:text-primary"
+            className="mt-0.5 inline-flex items-center gap-1 text-orange-100/60 hover:text-orange-100"
             onClick={() => void logout()}
             disabled={busy}
           >
@@ -259,18 +259,18 @@ export function FamilyClient() {
           </button>
         </div>
       </div>
-      <div className="mb-4 inline-block rounded border border-slate-300/80 bg-slate-100/90 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-700">
+      <div className="mb-4 inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-100/80 backdrop-blur-xl">
         Апельсин · X5
       </div>
-      <h1 className="mb-1 font-black tracking-tight text-zinc-900" style={{ fontSize: "clamp(1.75rem, 6vw, 2rem)" }}>
+      <h1 className="mb-1 font-black tracking-[-0.06em] text-white" style={{ fontSize: "clamp(2.4rem, 11vw, 3.5rem)" }}>
         Семья
       </h1>
-      <p className="mb-2 text-sm leading-relaxed text-zinc-700">Семейный счёт, уровень кэшбэка и бонусы для всех.</p>
-      <details className="mb-5 rounded-xl border border-zinc-200/80 bg-zinc-50/80 px-3 py-2 text-xs text-zinc-600">
-        <summary className="cursor-pointer list-none font-medium text-zinc-700 outline-none marker:hidden [&::-webkit-details-marker]:hidden">
-          <span className="underline decoration-zinc-300 underline-offset-2">Подробности и демо</span>
+      <p className="mb-3 text-sm font-medium leading-relaxed text-orange-50/70">Семейный счёт, уровень кэшбэка и бонусы для всех.</p>
+      <details className="mb-5 rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-xs text-orange-50/70 shadow-premium backdrop-blur-xl">
+        <summary className="cursor-pointer list-none font-semibold text-orange-50 outline-none marker:hidden [&::-webkit-details-marker]:hidden">
+          <span className="underline decoration-orange-200/30 underline-offset-2">Подробности и демо</span>
         </summary>
-        <p className="mt-2 border-t border-zinc-200/80 pt-2 leading-relaxed">
+        <p className="mt-2 border-t border-white/10 pt-2 leading-relaxed">
           Создайте семью, пригласите участников и суммируйте покупки. Уровень считается по средним тратам на человека:
           3 000 ₽, 5 000 ₽ и 10 000 ₽.
         </p>
@@ -304,16 +304,18 @@ export function FamilyClient() {
         />
       ) : (
         <div className="space-y-4">
-          <div className="flex justify-center text-4xl" aria-hidden>
-            🧾
+          <div className="flex justify-center">
+            <div className="flex h-20 w-20 items-center justify-center rounded-[2rem] border border-white/15 bg-white/10 text-4xl shadow-premium backdrop-blur-xl" aria-hidden>
+              🧾
+            </div>
           </div>
-          <Card className="border-2 border-zinc-800/10 bg-white shadow-brutal">
+          <Card className="bg-white/90">
             <CardContent className="p-4">
               <p className="text-sm font-black text-zinc-900">Создать семью</p>
               <p className="text-sm text-zinc-600">Вы станете организатором, остальным отправите приглашение по коду.</p>
               <Button
                 type="button"
-                className="mt-3 w-full gap-2 font-bold shadow-brutalSm"
+                className="mt-3 w-full gap-2 font-bold"
                 disabled={busy}
                 onClick={() => void post({ action: "create" })}
               >
@@ -327,10 +329,10 @@ export function FamilyClient() {
               <span className="w-full border-t border-dashed border-zinc-400/50" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="rounded bg-slate-100/90 px-2 text-zinc-500">или</span>
+              <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-orange-100/70 backdrop-blur">или</span>
             </div>
           </div>
-          <Card className="border-2 border-dashed border-primary/40 bg-primary-light/40 shadow-brutalSm">
+          <Card className="border-primary/20 bg-primary-light/90">
             <CardContent className="p-4">
               <p className="text-sm font-black text-zinc-900">Вступить по коду</p>
               <p className="text-xs text-zinc-600">Шесть символов из приглашения</p>
@@ -404,45 +406,49 @@ function FamilyView({
   return (
     <div className="space-y-5">
       <div className="relative">
-        <Card className="overflow-hidden border border-slate-200/90 bg-white/95 shadow-brutal">
-          <CardContent className="p-4">
-            <p className="text-[11px] font-medium text-slate-500">Семейный счёт за текущий календарный месяц</p>
-            <p className="mt-1 font-mono text-3xl font-black tabular-nums leading-none text-primary">
+        <Card className="overflow-hidden border-white/15 bg-white/[0.12] text-white shadow-premium">
+          <CardContent className="relative p-4">
+            <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-primary/35 blur-3xl" />
+            <div className="absolute -bottom-24 left-4 h-56 w-56 rounded-full bg-savings/20 blur-3xl" />
+            <div className="relative">
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-orange-100/60">Семейный счёт за месяц</p>
+            <p className="mt-2 font-mono text-4xl font-black tabular-nums leading-none text-orange-100">
               {formatMoney(family.totalMonthQrSpendRub)}
             </p>
             <div className="mt-2 flex flex-wrap gap-2 text-[11px] text-zinc-600">
-              <span className="rounded-lg bg-primary/10 px-2 py-1 font-semibold text-primary">
+              <span className="rounded-full bg-primary px-3 py-1 font-black text-white shadow-glow">
                 Уровень {family.familyLevel}
               </span>
-              <span className="rounded-lg bg-zinc-100 px-2 py-1">
-                на человека: <span className="font-mono text-zinc-800">{formatMoney(family.avgMonthSpendPerMemberRub)}</span>
+              <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-orange-50/80 backdrop-blur">
+                на человека: <span className="font-mono text-orange-100">{formatMoney(family.avgMonthSpendPerMemberRub)}</span>
               </span>
             </div>
             {t ? (
               <>
-                <p className="mb-1.5 mt-3 text-[11px] text-zinc-600">
-                  до порога <span className="font-semibold text-zinc-800">{formatMoney(t)}</span>
+                <p className="mb-1.5 mt-4 text-[11px] font-medium text-orange-50/70">
+                  до порога <span className="font-mono font-semibold text-orange-100">{formatMoney(t)}</span>
                 </p>
                 <Progress
                   value={pct}
-                  className="h-2.5 rounded-sm border border-zinc-200/80"
-                  indicatorClassName="from-slate-500 to-slate-400"
+                  className="h-3 rounded-full border border-white/10 bg-white/10"
+                  indicatorClassName="from-orange-200 via-primary to-savings"
                 />
               </>
             ) : (
-              <p className="mt-3 text-xs font-medium text-slate-700">Семья достигла верхнего уровня в демо</p>
+              <p className="mt-4 text-xs font-semibold text-orange-100">Семья достигла верхнего уровня в демо</p>
             )}
-            <p className="mt-4 flex items-start gap-2 border-t border-dashed border-zinc-200 pt-3 text-sm leading-snug text-zinc-800">
-              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
+            <p className="mt-4 flex items-start gap-2 rounded-2xl border border-white/10 bg-white/10 p-3 text-sm font-medium leading-snug text-orange-50/90 backdrop-blur">
+              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-orange-200" />
               {family.familyLine}
             </p>
+            </div>
           </CardContent>
         </Card>
       </div>
 
       <div>
-        <p className="mb-2 text-sm font-black text-zinc-800">
-          Участники <span className="font-mono text-primary">({family.memberCount}/{maxMembers})</span>
+        <p className="mb-2 text-sm font-black text-orange-50">
+          Участники <span className="font-mono text-orange-200">({family.memberCount}/{maxMembers})</span>
         </p>
         <ul className="space-y-2">
           {family.members.map((m, idx) => {
@@ -450,25 +456,28 @@ function FamilyView({
             return (
               <li
                 key={m.id}
-                className={`flex items-center justify-between border-2 border-zinc-800/10 p-3 shadow-brutalSm ${
-                  idx % 2 === 0 ? "bg-white" : "bg-zinc-50/90"
-                }`}
+                className="flex items-center justify-between rounded-[1.35rem] border border-white/10 bg-white/[0.12] p-3 shadow-[0_18px_46px_-34px_rgba(0,0,0,0.8)] backdrop-blur-xl"
               >
-                <div className="min-w-0">
-                  <p className="truncate font-bold text-zinc-900">{m.label}</p>
-                  <p className="mt-0.5 text-[11px] text-zinc-600">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-200 to-primary font-black text-graphite shadow-glow">
+                    {m.label.slice(0, 1).toUpperCase()}
+                  </div>
+                  <div className="min-w-0">
+                  <p className="truncate font-bold text-white">{m.label}</p>
+                  <p className="mt-0.5 text-[11px] text-orange-50/60">
                     {m.isLeader ? "Организатор" : "Участник"} · покупки{" "}
-                    <span className="font-mono tabular-nums text-zinc-800">{formatMoney(m.monthQrSpendRub)}</span>
+                    <span className="font-mono tabular-nums text-orange-100">{formatMoney(m.monthQrSpendRub)}</span>
                   </p>
+                  </div>
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-1">
                   {m.isLeader ? (
-                    <Badge className="border border-slate-300/80 bg-slate-200/90 text-[10px] font-bold text-slate-800">
+                    <Badge className="border border-orange-200/20 bg-orange-200/15 text-[10px] font-bold text-orange-100">
                       орг
                     </Badge>
                   ) : null}
                   {fake ? (
-                    <span className="rounded border border-slate-300/80 bg-slate-100 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-600">
+                    <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-orange-100/70">
                       демо
                     </span>
                   ) : null}
@@ -479,7 +488,7 @@ function FamilyView({
           {Array.from({ length: family.openSlots }).map((_, i) => (
             <li
               key={`open-${i}`}
-              className="border-2 border-dashed border-zinc-300/80 bg-zinc-100/50 p-3 text-sm text-zinc-500"
+              className="rounded-[1.35rem] border border-dashed border-white/20 bg-white/[0.06] p-3 text-sm text-orange-50/50"
             >
               Свободное место — отправьте приглашение ниже
             </li>
@@ -487,17 +496,17 @@ function FamilyView({
         </ul>
       </div>
 
-      <Card className="border border-slate-200/90 bg-white shadow-brutalSm">
+      <Card className="border-white/15 bg-white/[0.12] text-white">
         <CardContent className="space-y-2 p-4">
-          <p className="text-sm font-black text-zinc-900">Код и ссылка</p>
-          <p className="font-mono text-sm font-bold tracking-wide text-zinc-800">{family.inviteCode}</p>
-          <p className="break-all font-mono text-[10px] leading-relaxed text-zinc-500">{family.inviteLink}</p>
+          <p className="text-sm font-black text-orange-50">Код и ссылка</p>
+          <p className="font-mono text-2xl font-black tracking-wide text-orange-200">{family.inviteCode}</p>
+          <p className="break-all font-mono text-[10px] leading-relaxed text-orange-50/50">{family.inviteLink}</p>
           <div className="flex flex-wrap gap-2 pt-1">
-            <Button type="button" size="sm" className="gap-2 shadow-brutalSm" onClick={() => onCopy(family.inviteLink)}>
+            <Button type="button" size="sm" className="gap-2" onClick={() => onCopy(family.inviteLink)}>
               <Link2 className="h-4 w-4" />
               {copied ? "Скопировано" : "Скопировать ссылку"}
             </Button>
-            <Button type="button" size="sm" variant="secondary" className="gap-2 shadow-brutalSm" onClick={() => onShare(family.inviteLink)}>
+            <Button type="button" size="sm" variant="secondary" className="gap-2" onClick={() => onShare(family.inviteLink)}>
               <Share2 className="h-4 w-4" />
               Поделиться
             </Button>
@@ -506,24 +515,24 @@ function FamilyView({
       </Card>
 
       {activity.length > 0 ? (
-        <details className="group rounded-xl border border-slate-200/90 bg-white/90 shadow-brutalSm open:shadow-md">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-zinc-800 marker:hidden [&::-webkit-details-marker]:hidden">
-            <span>Журнал <span className="font-mono text-zinc-500">({activity.length})</span></span>
-            <span className="text-xs font-normal text-zinc-500 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
+        <details className="group rounded-[1.35rem] border border-white/10 bg-white/[0.1] shadow-premium backdrop-blur-xl open:shadow-md">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-orange-50 marker:hidden [&::-webkit-details-marker]:hidden">
+            <span>Журнал <span className="font-mono text-orange-100/50">({activity.length})</span></span>
+            <span className="text-xs font-normal text-orange-100/50 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
               ▼
             </span>
           </summary>
-          <div className="border-t border-slate-100 px-2 pb-2">
+          <div className="border-t border-white/10 px-2 pb-2">
             <ul className="max-h-48 space-y-0 overflow-y-auto scrollbar-thin sm:max-h-64">
               {activity.map((row) => (
                 <li
                   key={row.id}
-                  className="flex gap-2 border-b border-slate-100 py-2 text-xs last:border-b-0"
+                  className="flex gap-2 border-b border-white/10 py-2 text-xs last:border-b-0"
                 >
-                  <span className="w-[4.5rem] shrink-0 font-mono text-[10px] text-slate-400">
+                  <span className="w-[4.5rem] shrink-0 font-mono text-[10px] text-orange-100/40">
                     {formatSqliteDateTime(row.at)}
                   </span>
-                  <span className="min-w-0 leading-snug text-slate-700">{row.line}</span>
+                  <span className="min-w-0 leading-snug text-orange-50/70">{row.line}</span>
                 </li>
               ))}
             </ul>
@@ -531,37 +540,37 @@ function FamilyView({
         </details>
       ) : null}
 
-      <details className="group rounded-xl border border-dashed border-slate-300/90 bg-slate-50/95 shadow-brutalSm open:border-solid">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-slate-700 marker:hidden [&::-webkit-details-marker]:hidden">
+      <details className="group rounded-[1.35rem] border border-dashed border-white/20 bg-white/[0.08] shadow-premium backdrop-blur-xl open:border-solid">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-orange-50/75 marker:hidden [&::-webkit-details-marker]:hidden">
           <span>
             Тестовые действия{" "}
-            <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[9px] font-mono font-bold normal-case tracking-normal text-slate-100">
+            <span className="rounded-full bg-orange-200/15 px-1.5 py-0.5 text-[9px] font-mono font-bold normal-case tracking-normal text-orange-100">
               демо
             </span>
           </span>
-          <span className="text-slate-500 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
+          <span className="text-orange-100/50 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
             ▼
           </span>
         </summary>
-        <div className="border-t border-slate-200/80 p-3 pt-2">
+        <div className="border-t border-white/10 p-3 pt-2">
           <div className="flex flex-col gap-2">
             <div>
-              <label className="mb-1 block text-[10px] font-medium text-slate-600">Сумма операции, ₽ (как в выписке / пуше банка)</label>
+              <label className="mb-1 block text-[10px] font-medium text-orange-50/70">Сумма операции, ₽ (как в выписке / пуше банка)</label>
               <Input
-                className="h-10 border-2 font-mono tabular-nums"
+                className="h-10 font-mono tabular-nums"
                 inputMode="decimal"
                 placeholder="например 1888 или пусто = случайная для теста"
                 value={qrAmount}
                 onChange={(e) => setQrAmount(e.target.value)}
               />
-              <p className="mt-1 text-[10px] leading-relaxed text-slate-600">
+              <p className="mt-1 text-[10px] leading-relaxed text-orange-50/55">
                 В демо вы задаёте сумму сами. В продукте она придёт из данных банка по факту покупки. Сумма добавляется
                 к вашим личным тратам за месяц и учитывается в семейном счёте.
               </p>
             </div>
             <Button
               type="button"
-              className="h-11 w-full gap-2 border-2 border-primary/30 bg-primary font-bold text-white shadow-brutalSm transition active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+              className="h-11 w-full gap-2 font-bold"
               disabled={busy}
               onClick={() => {
                 const raw = qrAmount.trim().replace(/\s/g, "").replace(",", ".");
@@ -577,13 +586,13 @@ function FamilyView({
               Симулировать оплату по QR
             </Button>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              <Button type="button" variant="secondary" className="h-10 gap-1 font-semibold shadow-brutalSm" disabled={busy} onClick={onDemoPeers}>
+              <Button type="button" variant="secondary" className="h-10 gap-1 font-semibold" disabled={busy} onClick={onDemoPeers}>
                 +3 демо-участника
               </Button>
               <Button
                 type="button"
                 variant="outline"
-                className="h-10 gap-1 border-2 border-zinc-400/50 font-semibold text-zinc-800 shadow-brutalSm"
+                className="h-10 gap-1 font-semibold"
                 disabled={busy}
                 onClick={onResetMySpend}
               >
@@ -593,7 +602,7 @@ function FamilyView({
             </div>
             <Button
               type="button"
-              className="h-10 w-full gap-2 border-2 border-red-900/20 bg-red-50/90 font-bold text-red-950 shadow-brutalSm hover:bg-red-100/90"
+              className="h-10 w-full gap-2 border border-red-200/30 bg-red-50/90 font-bold text-red-950 hover:bg-red-100/90"
               disabled={busy}
               onClick={onDemoResetFull}
             >
@@ -601,7 +610,7 @@ function FamilyView({
               Сбросить демо целиком
             </Button>
           </div>
-          <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+          <p className="mt-2 text-[11px] leading-relaxed text-orange-50/55">
             Полный сброс: ваши траты обнуляются, тестовые персонажи удаляются. Реальные участники не затрагиваются.
           </p>
         </div>
@@ -610,7 +619,7 @@ function FamilyView({
       <Button
         type="button"
         variant="outline"
-        className="h-11 w-full border-2 border-zinc-400 font-semibold text-zinc-800 shadow-brutalSm"
+        className="h-11 w-full border-white/20 bg-white/10 font-semibold text-orange-50 hover:bg-white/15"
         disabled={busy}
         onClick={onLeave}
       >

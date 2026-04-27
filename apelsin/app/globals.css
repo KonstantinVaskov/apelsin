@@ -6,7 +6,7 @@
   --background: 210 20% 98%;
   --foreground: 0 0% 10%;
   --border: 214 32% 91%;
-  --radius: 1rem;
+  --radius: 1.25rem;
   --font-app: "Segoe UI Variable Text", "Segoe UI", "SF Pro Text", "Roboto", "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -20,6 +20,7 @@ body {
   @apply bg-[#F8F9FA] text-[#1A1A1A] antialiased;
   font-family: var(--font-app);
   font-optical-sizing: auto;
+  text-rendering: geometricPrecision;
 }
 
 .dark body {
@@ -35,7 +36,11 @@ body {
 }
 
 .glass {
-  @apply border border-white/40 bg-white/70 shadow-card backdrop-blur-xl;
+  @apply border border-white/60 bg-white/70 shadow-premium backdrop-blur-2xl;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 24px 80px -34px rgba(24, 17, 12, 0.55),
+    0 18px 42px -28px rgba(255, 107, 0, 0.5);
 }
 
 .dark .glass {
@@ -43,29 +48,42 @@ body {
 }
 
 .gradient-hero {
-  background: linear-gradient(
-    135deg,
-    #fff0e5 0%,
-    #ffe4d4 35%,
-    #fff8f3 70%,
-    #f8f9fa 100%
-  );
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 159, 67, 0.34) 0, transparent 28%),
+    radial-gradient(circle at 88% 6%, rgba(255, 107, 0, 0.28) 0, transparent 25%),
+    radial-gradient(circle at 60% 80%, rgba(255, 214, 170, 0.38) 0, transparent 34%),
+    linear-gradient(150deg, #fff8ef 0%, #ffe9d2 42%, #fffaf4 72%, #f8f5f0 100%);
 }
 
 .dark .gradient-hero {
   background: linear-gradient(135deg, #1c1917 0%, #292524 50%, #18181b 100%);
 }
 
-/* страница семьи: холодная подложка */
 .family-page,
 .squad-page {
-  background-color: #e8edf3;
-  background-image: repeating-linear-gradient(
-      105deg,
-      transparent,
-      transparent 11px,
-      rgba(51, 65, 85, 0.045) 11px,
-      rgba(51, 65, 85, 0.045) 12px
-    ),
-    linear-gradient(175deg, #eef2f7 0%, #e4e9f0 45%, #dde4ee 100%);
+  background-color: #17110e;
+  background-image:
+    radial-gradient(circle at 14% 4%, rgba(255, 107, 0, 0.26) 0, transparent 28%),
+    radial-gradient(circle at 90% 18%, rgba(255, 199, 120, 0.18) 0, transparent 25%),
+    linear-gradient(160deg, #201612 0%, #120f0e 48%, #241914 100%);
+  color: #fff7ed;
+}
+
+.premium-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black, transparent 72%);
+}
+
+.premium-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.55) 0.5px, transparent 0.5px);
+  background-size: 7px 7px;
+  mix-blend-mode: overlay;
 }

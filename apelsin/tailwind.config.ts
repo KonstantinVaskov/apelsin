@@ -18,6 +18,16 @@ const config: Config = {
           dark: "#E55D00",
           light: "#FFF0E5",
         },
+        graphite: {
+          DEFAULT: "#15110F",
+          soft: "#29211D",
+          mist: "#F3EDE7",
+        },
+        cream: {
+          DEFAULT: "#FFF7ED",
+          soft: "#FFF3E3",
+          deep: "#F7D6AF",
+        },
         surface: "#FFFFFF",
         muted: {
           DEFAULT: "#F8F9FA",
@@ -61,6 +71,8 @@ const config: Config = {
       boxShadow: {
         card: "0 4px 24px -4px rgba(255, 107, 0, 0.12), 0 8px 16px -8px rgba(0,0,0,0.08)",
         glow: "0 0 40px rgba(255, 107, 0, 0.25)",
+        premium: "0 28px 80px -32px rgba(24, 17, 12, 0.55), 0 18px 42px -28px rgba(255, 107, 0, 0.55)",
+        insetGlow: "inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -24px 48px rgba(255,107,0,0.08)",
         brutal: "4px 4px 0 0 rgba(24, 24, 27, 0.12)",
         brutalSm: "3px 3px 0 0 rgba(24, 24, 27, 0.1)",
       },

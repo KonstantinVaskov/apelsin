@@ -22,11 +22,11 @@ export function OrangeCardProgram() {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease }}
-      className="relative mb-8 overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/40 shadow-[0_32px_80px_-24px_rgba(255,107,0,0.18),0_0_0_1px_rgba(255,255,255,0.8)_inset] backdrop-blur-2xl"
+      className="relative mb-8 overflow-hidden rounded-[2rem] border border-white/70 bg-white/60 shadow-premium backdrop-blur-2xl"
     >
       {/* mesh / glow */}
       <div
-        className="pointer-events-none absolute -right-24 top-0 h-64 w-64 rounded-full bg-gradient-to-br from-primary/25 via-savings/15 to-transparent blur-3xl"
+        className="pointer-events-none absolute -right-24 top-0 h-64 w-64 rounded-full bg-gradient-to-br from-primary/35 via-savings/20 to-transparent blur-3xl"
         aria-hidden
       />
       <div
@@ -38,6 +38,8 @@ export function OrangeCardProgram() {
         aria-hidden
       />
 
+      <div className="premium-grid pointer-events-none absolute inset-0 opacity-70" aria-hidden />
+
       <div className="relative px-4 py-7 sm:px-6">
         {/* 1. Краткое описание */}
         <div className="mb-8 text-center">
@@ -45,10 +47,7 @@ export function OrangeCardProgram() {
             <Sparkles className="h-3.5 w-3.5" />
             Бонусная программа
           </div>
-          <h2
-            id="apelsin-card-h"
-            className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-600 bg-clip-text text-2xl font-black tracking-tight text-transparent sm:text-[1.65rem]"
-          >
+          <h2 id="apelsin-card-h" className="text-3xl font-black tracking-[-0.06em] text-graphite sm:text-4xl">
             Апельсиновая карта
           </h2>
           <p className="mx-auto mt-3 max-w-[26rem] text-sm leading-relaxed text-zinc-600">
@@ -96,6 +95,32 @@ export function OrangeCardProgram() {
               icon={Users2}
               accent="from-violet-500/90 to-primary"
             />
+          </div>
+        </motion.div>
+
+        <motion.div {...reveal} className="mb-10 rounded-[1.6rem] border border-white/70 bg-graphite p-4 text-white shadow-premium">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-100/60">уровни семьи</p>
+              <p className="mt-1 text-xl font-black tracking-tight">От карты до максимума</p>
+            </div>
+            <div className="rounded-2xl bg-white/10 px-3 py-2 text-right backdrop-blur">
+              <p className="font-mono text-2xl font-black text-orange-200">0 → 3</p>
+              <p className="text-[10px] text-orange-100/60">уровня</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 gap-1.5">
+            {[0, 1, 2, 3].map((level) => (
+              <div key={level} className="rounded-2xl border border-white/10 bg-white/10 p-2 text-center backdrop-blur">
+                <p className="font-mono text-lg font-black text-orange-200">L{level}</p>
+                <div className="mt-2 flex h-16 items-end overflow-hidden rounded-full bg-white/10">
+                  <div
+                    className="w-full rounded-full bg-gradient-to-t from-primary to-orange-200"
+                    style={{ height: `${28 + level * 20}%` }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </motion.div>
 
@@ -197,15 +222,16 @@ function StepCard({
   accent: string;
 }) {
   return (
-    <div className="group relative flex gap-3 overflow-hidden rounded-2xl border border-white/80 bg-white/70 p-3.5 shadow-sm transition-shadow duration-300 hover:shadow-md">
+    <div className="group relative flex gap-3 overflow-hidden rounded-[1.35rem] border border-white/80 bg-white/75 p-3.5 shadow-[0_18px_46px_-34px_rgba(24,17,12,0.65)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/90">
+      <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/10 blur-2xl transition-opacity group-hover:opacity-100" />
       <div
-        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${accent} text-white shadow-md`}
+        className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} text-white shadow-md`}
       >
         <Icon className="h-5 w-5" />
       </div>
-      <div className="min-w-0 flex-1">
+      <div className="relative min-w-0 flex-1">
         <div className="mb-0.5 flex items-center gap-2">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-zinc-900 text-[10px] font-black text-white">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-graphite text-[10px] font-black text-white">
             {n}
           </span>
           <p className="text-sm font-bold leading-tight text-zinc-900">{title}</p>
@@ -230,10 +256,10 @@ function RoleRow({
   bar: string;
 }) {
   return (
-    <div className="rounded-2xl border border-zinc-100 bg-gradient-to-r from-white to-zinc-50/90 p-3.5 shadow-sm sm:p-4">
+    <div className="rounded-[1.35rem] border border-white/70 bg-white/75 p-3.5 shadow-[0_16px_40px_-34px_rgba(24,17,12,0.7)] backdrop-blur-xl sm:p-4">
       <div className="flex gap-3 sm:gap-3.5">
         <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-zinc-900 text-sm font-bold text-white"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-graphite text-sm font-bold text-white shadow-sm"
           aria-hidden
         >
           {step}
@@ -241,14 +267,14 @@ function RoleRow({
         <div className="min-w-0 flex-1">
           <div className="flex flex-col gap-1.5 min-[400px]:flex-row min-[400px]:items-start min-[400px]:justify-between min-[400px]:gap-3">
             <p className="text-sm font-bold leading-tight text-zinc-900">{title}</p>
-            <span className="inline-flex w-fit shrink-0 rounded-lg bg-primary/10 px-2.5 py-1 font-mono text-xs font-bold tabular-nums text-primary">
+            <span className="inline-flex w-fit shrink-0 rounded-xl bg-primary/10 px-2.5 py-1 font-mono text-xs font-bold tabular-nums text-primary ring-1 ring-primary/10">
               {pct}
             </span>
           </div>
           <p className="mt-1.5 text-[11px] leading-relaxed text-zinc-600 sm:mt-2">{desc}</p>
         </div>
       </div>
-      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-zinc-200/80 sm:ml-[3.25rem]">
+      <div className="mt-3 h-2 overflow-hidden rounded-full bg-zinc-200/80 sm:ml-[3.25rem]">
         <motion.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
@@ -265,10 +291,10 @@ function RoleRow({
 function FamilyTier({ tier, title, desc }: { tier: 0 | 1 | 2 | 3; title: string; desc: string }) {
   const heights = ["h-4", "h-8", "h-12", "h-16"] as const;
   return (
-    <div className="flex gap-3 overflow-hidden rounded-2xl border border-white/60 bg-white/80 p-3.5 shadow-sm backdrop-blur-sm">
-      <div className="flex w-14 shrink-0 flex-col items-center justify-end gap-1 rounded-xl bg-gradient-to-b from-zinc-100 to-zinc-50 py-2">
-        <div className={`w-6 rounded-t-md bg-gradient-to-t from-primary/80 to-savings/60 ${heights[tier]}`} />
-        <span className="text-[9px] font-bold text-zinc-400">L{tier}</span>
+    <div className="group flex gap-3 overflow-hidden rounded-[1.35rem] border border-white/70 bg-white/80 p-3.5 shadow-[0_18px_48px_-36px_rgba(24,17,12,0.7)] backdrop-blur-xl transition-transform hover:-translate-y-0.5">
+      <div className="flex w-14 shrink-0 flex-col items-center justify-end gap-1 rounded-2xl bg-gradient-to-b from-cream to-white py-2 shadow-inner">
+        <div className={`w-6 rounded-t-md bg-gradient-to-t from-primary to-orange-200 shadow-glow ${heights[tier]}`} />
+        <span className="text-[9px] font-black text-primary">L{tier}</span>
       </div>
       <div>
         <p className="text-sm font-bold text-zinc-900">{title}</p>

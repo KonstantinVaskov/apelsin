@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
+import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -101,16 +102,37 @@ function LoginForm() {
   }
 
   return (
-    <MobileShell>
-      <p className="mb-2">
-        <Link href="/" className="text-sm text-zinc-500 hover:text-primary">
+    <MobileShell className="gradient-hero">
+      <p className="mb-4">
+        <Link href="/" className="text-sm font-medium text-zinc-600 underline decoration-zinc-300 underline-offset-4 hover:text-primary">
           ← На главную
         </Link>
       </p>
-      <h1 className="mb-1 text-2xl font-bold text-zinc-900">Вход в демо</h1>
-      <p className="mb-6 text-sm text-zinc-600">E-mail и пароль, как в инфо по Апельсинку. При регистрации — имя и фамилия, как в банке.</p>
 
-      <div className="mb-4 flex gap-2 rounded-2xl bg-zinc-100 p-1">
+      <div className="mb-5 overflow-hidden rounded-[2rem] border border-white/70 bg-graphite p-5 text-white shadow-premium">
+        <div className="mb-8 flex items-start justify-between">
+          <div className="rounded-2xl bg-white/10 p-2.5 backdrop-blur">
+            <ShieldCheck className="h-5 w-5 text-orange-200" />
+          </div>
+          <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-orange-100/80">
+            demo access
+          </div>
+        </div>
+        <h1 className="max-w-xs text-3xl font-black leading-[0.95] tracking-[-0.06em]">
+          Быстрый вход для защиты
+        </h1>
+        <p className="mt-3 text-sm leading-relaxed text-orange-50/70">
+          Лучший сценарий для показа: один клик, новый демо-профиль и сразу экран семьи.
+        </p>
+      </div>
+
+      <Button type="button" size="lg" className="mb-5 w-full" disabled={busy} onClick={() => void demoLogin()}>
+        <Sparkles className="h-5 w-5" />
+        Войти в демо за 1 клик
+        <ArrowRight className="h-5 w-5" />
+      </Button>
+
+      <div className="mb-4 flex gap-2 rounded-2xl border border-white/70 bg-white/60 p-1 shadow-sm backdrop-blur-xl">
         <button
           type="button"
           className={`flex-1 rounded-xl py-2 text-sm font-medium transition-colors ${
@@ -131,7 +153,7 @@ function LoginForm() {
         </button>
       </div>
 
-      <Card className="border-zinc-200">
+      <Card>
         <CardContent className="space-y-4 p-4">
           <div>
             <label className="mb-1 block text-xs font-medium text-zinc-500">E-mail</label>
@@ -183,11 +205,8 @@ function LoginForm() {
               </p>
             ) : null}
           </div>
-          <Button type="button" className="w-full" disabled={busy} onClick={() => void submit()}>
+          <Button type="button" variant="secondary" className="w-full" disabled={busy} onClick={() => void submit()}>
             {busy ? "…" : mode === "register" ? "Создать аккаунт" : "Войти"}
-          </Button>
-          <Button type="button" variant="secondary" className="w-full" disabled={busy} onClick={() => void demoLogin()}>
-            Войти в демо за 1 клик
           </Button>
         </CardContent>
       </Card>
