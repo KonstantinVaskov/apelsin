@@ -62,14 +62,10 @@ function validateLogin(s: string) {
   return { ok: true as const, login: t, key: t.toLowerCase() };
 }
 
-function validateEmail(s: string) {
-  const t = s.trim();
-  if (t.length < 5 || t.length > 100) return { ok: false as const, error: "login_invalid" as const };
-  const key = t.normalize("NFC").toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(key)) {
-    return { ok: false as const, error: "login_invalid" as const };
-  }
-  return { ok: true as const, key, display: t };
+function validatePhone(s: string) {
+  const t = s.trim().replace(/[^\d+]/g, "");
+  if (t.length < 10 || t.length > 15) return { ok: false as const, error: "login_invalid" as const };
+  return { ok: true as const, key: t, display: t };
 }
 
 function validatePersonName(
@@ -195,7 +191,7 @@ export function registerUser(loginRaw: string, password: string, firstNameRaw: s
   if (!f.ok) return { ok: false as const, error: f.error };
   const l = validatePersonName(lastNameRaw, "last");
   if (!l.ok) return { ok: false as const, error: l.error };
-  const em = validateEmail(loginRaw);
+  const em = validatePhone(loginRaw);
   if (!em.ok) return { ok: false as const, error: em.error };
   const pw = validatePassword(password);
   if (!pw.ok) return { ok: false as const, error: pw.error };

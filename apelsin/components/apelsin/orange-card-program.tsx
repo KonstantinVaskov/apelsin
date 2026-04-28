@@ -22,32 +22,16 @@ export function OrangeCardProgram() {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease }}
-      className="relative mb-8 overflow-hidden rounded-[2rem] border border-white/70 bg-white/60 shadow-premium backdrop-blur-2xl"
+      className="relative mb-8 overflow-hidden rounded-[2rem] bg-white shadow-sm border border-zinc-100"
     >
-      {/* mesh / glow */}
-      <div
-        className="pointer-events-none absolute -right-24 top-0 h-64 w-64 rounded-full bg-gradient-to-br from-primary/35 via-savings/20 to-transparent blur-3xl"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-gradient-to-tr from-amber-200/30 to-primary/10 blur-3xl"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(255,107,0,0.12),transparent)]"
-        aria-hidden
-      />
-
-      <div className="premium-grid pointer-events-none absolute inset-0 opacity-70" aria-hidden />
-
       <div className="relative px-4 py-7 sm:px-6">
         {/* 1. Краткое описание */}
         <div className="mb-8 text-center">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
             <Sparkles className="h-3.5 w-3.5" />
             Бонусная программа
           </div>
-          <h2 id="apelsin-card-h" className="text-3xl font-black tracking-[-0.06em] text-graphite sm:text-4xl">
+          <h2 id="apelsin-card-h" className="text-3xl font-black tracking-[-0.06em] text-zinc-900 sm:text-4xl">
             Апельсиновая карта
           </h2>
           <p className="mx-auto mt-3 max-w-[26rem] text-sm leading-relaxed text-zinc-600">
@@ -98,24 +82,24 @@ export function OrangeCardProgram() {
           </div>
         </motion.div>
 
-        <motion.div {...reveal} className="mb-10 rounded-[1.6rem] border border-white/70 bg-graphite p-4 text-white shadow-premium">
+        <motion.div {...reveal} className="mb-10 rounded-[1.6rem] bg-orange-50 p-5 shadow-sm border border-orange-100">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-100/60">уровни семьи</p>
-              <p className="mt-1 text-xl font-black tracking-tight">От карты до максимума</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-500">уровни семьи</p>
+              <p className="mt-1 text-xl font-black tracking-tight text-zinc-900">От карты до максимума</p>
             </div>
-            <div className="rounded-2xl bg-white/10 px-3 py-2 text-right backdrop-blur shrink-0">
-              <p className="font-mono text-2xl font-black text-orange-200">0 → 3</p>
-              <p className="text-[10px] text-orange-100/60">уровня</p>
+            <div className="rounded-2xl bg-white px-3 py-2 text-right shrink-0 shadow-sm">
+              <p className="font-mono text-2xl font-black text-primary">0 → 3</p>
+              <p className="text-[10px] text-zinc-500">уровня</p>
             </div>
           </div>
           <div className="grid grid-cols-4 gap-1.5">
             {[0, 1, 2, 3].map((level) => (
-              <div key={level} className="rounded-2xl border border-white/10 bg-white/10 p-2 text-center backdrop-blur">
-                <p className="font-mono text-lg font-black text-orange-200">L{level}</p>
-                <div className="mt-2 flex h-16 items-end overflow-hidden rounded-full bg-white/10">
+              <div key={level} className="rounded-2xl bg-white p-2 text-center shadow-sm">
+                <p className="font-mono text-lg font-black text-zinc-900">L{level}</p>
+                <div className="mt-2 flex h-16 items-end overflow-hidden rounded-full bg-zinc-100">
                   <div
-                    className="w-full rounded-full bg-gradient-to-t from-primary to-orange-200"
+                    className="w-full rounded-full bg-primary"
                     style={{ height: `${28 + level * 20}%` }}
                   />
                 </div>
@@ -222,21 +206,20 @@ function StepCard({
   accent: string;
 }) {
   return (
-    <div className="group relative flex gap-3 overflow-hidden rounded-[1.35rem] border border-white/80 bg-white/75 p-3.5 shadow-[0_18px_46px_-34px_rgba(24,17,12,0.65)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/90">
-      <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/10 blur-2xl transition-opacity group-hover:opacity-100" />
+    <div className="group relative flex gap-3 overflow-hidden rounded-[1.35rem] bg-white p-4 shadow-sm border border-zinc-100 transition-all duration-300 hover:-translate-y-0.5">
       <div
-        className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} text-white shadow-md`}
+        className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-orange-50 text-primary`}
       >
         <Icon className="h-5 w-5" />
       </div>
       <div className="relative min-w-0 flex-1">
         <div className="mb-0.5 flex items-center gap-2">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-graphite text-[10px] font-black text-white">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-[10px] font-black text-zinc-600">
             {n}
           </span>
           <p className="text-sm font-bold leading-tight text-zinc-900">{title}</p>
         </div>
-        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">{body}</p>
+        <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{body}</p>
       </div>
     </div>
   );
@@ -256,10 +239,10 @@ function RoleRow({
   bar: string;
 }) {
   return (
-    <div className="rounded-[1.35rem] border border-white/70 bg-white/75 p-3.5 shadow-[0_16px_40px_-34px_rgba(24,17,12,0.7)] backdrop-blur-xl sm:p-4">
+    <div className="rounded-[1.35rem] bg-white p-4 shadow-sm border border-zinc-100">
       <div className="flex gap-3 sm:gap-3.5">
         <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-graphite text-sm font-bold text-white shadow-sm"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-zinc-100 text-sm font-bold text-zinc-600"
           aria-hidden
         >
           {step}
@@ -267,21 +250,21 @@ function RoleRow({
         <div className="min-w-0 flex-1">
           <div className="flex flex-col gap-1.5 min-[400px]:flex-row min-[400px]:items-start min-[400px]:justify-between min-[400px]:gap-3">
             <p className="text-sm font-bold leading-tight text-zinc-900">{title}</p>
-            <span className="inline-flex w-fit shrink-0 rounded-xl bg-primary/10 px-2.5 py-1 font-mono text-xs font-bold tabular-nums text-primary ring-1 ring-primary/10">
+            <span className="inline-flex w-fit shrink-0 rounded-xl bg-orange-50 px-2.5 py-1 font-mono text-xs font-bold tabular-nums text-primary">
               {pct}
             </span>
           </div>
-          <p className="mt-1.5 text-[11px] leading-relaxed text-zinc-600 sm:mt-2">{desc}</p>
+          <p className="mt-1.5 text-[11px] leading-relaxed text-zinc-500 sm:mt-2">{desc}</p>
         </div>
       </div>
-      <div className="mt-3 h-2 overflow-hidden rounded-full bg-zinc-200/80 sm:ml-[3.25rem]">
+      <div className="mt-3 h-2 overflow-hidden rounded-full bg-zinc-100 sm:ml-[3.25rem]">
         <motion.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65, ease }}
           style={{ transformOrigin: "left" }}
-          className={`h-full rounded-full bg-gradient-to-r from-amber-400 via-primary to-red-500 ${bar}`}
+          className={`h-full rounded-full bg-primary ${bar}`}
         />
       </div>
     </div>
@@ -291,14 +274,14 @@ function RoleRow({
 function FamilyTier({ tier, title, desc }: { tier: 0 | 1 | 2 | 3; title: string; desc: string }) {
   const heights = ["h-4", "h-8", "h-12", "h-16"] as const;
   return (
-    <div className="group flex gap-3 overflow-hidden rounded-[1.35rem] border border-white/70 bg-white/80 p-3.5 shadow-[0_18px_48px_-36px_rgba(24,17,12,0.7)] backdrop-blur-xl transition-transform hover:-translate-y-0.5">
-      <div className="flex w-14 shrink-0 flex-col items-center justify-end gap-1 rounded-2xl bg-gradient-to-b from-cream to-white py-2 shadow-inner">
-        <div className={`w-6 rounded-t-md bg-gradient-to-t from-primary to-orange-200 shadow-glow ${heights[tier]}`} />
+    <div className="group flex gap-3 overflow-hidden rounded-[1.35rem] bg-white p-4 shadow-sm border border-zinc-100 transition-transform hover:-translate-y-0.5">
+      <div className="flex w-14 shrink-0 flex-col items-center justify-end gap-1 rounded-2xl bg-zinc-50 py-2">
+        <div className={`w-6 rounded-t-md bg-primary ${heights[tier]}`} />
         <span className="text-[9px] font-black text-primary">L{tier}</span>
       </div>
       <div>
         <p className="text-sm font-bold text-zinc-900">{title}</p>
-        <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">{desc}</p>
+        <p className="mt-1 text-[11px] leading-relaxed text-zinc-500">{desc}</p>
       </div>
     </div>
   );

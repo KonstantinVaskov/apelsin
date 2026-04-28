@@ -12,8 +12,8 @@ import { MobileShell } from "@/components/apelsin/mobile-shell";
 import { apiJson, ApiError } from "@/lib/api-client";
 
 const errRu: Record<string, string> = {
-  login_taken: "Такой e-mail уже зарегистрирован",
-  login_invalid: "E-mail: 5–100 символов, формат как в банке (user@example.ru)",
+  login_taken: "Такой номер уже зарегистрирован",
+  login_invalid: "Номер телефона: введите корректный номер (например, +7 999 000-00-00)",
   first_name_invalid: "Имя: 1–50 символов, буквы и типичные знаки",
   last_name_invalid: "Фамилия: 1–50 символов, буквы и типичные знаки",
   password_length: "Пароль: от 8 до 128 символов",
@@ -81,12 +81,12 @@ function LoginForm() {
     setMsg(null);
     setBusy(true);
     try {
-      const suffix = `${Date.now()}${Math.floor(Math.random() * 1000)}`;
+      const suffix = `${Math.floor(Math.random() * 9000000) + 1000000}`;
       await apiJson<{ ok: boolean }>("/api/auth", {
         method: "POST",
         body: JSON.stringify({
           action: "register",
-          login: `user${suffix}@apelsin.app`,
+          login: `+7999${suffix}`,
           password: "Demo1234",
           firstName: "Новый",
           lastName: "Участник",
@@ -102,26 +102,26 @@ function LoginForm() {
   }
 
   return (
-    <MobileShell className="gradient-hero">
+    <MobileShell className="bg-[#F8F9FA]">
       <p className="mb-4">
         <Link href="/" className="text-sm font-medium text-zinc-600 underline decoration-zinc-300 underline-offset-4 hover:text-primary">
           ← На главную
         </Link>
       </p>
 
-      <div className="mb-5 overflow-hidden rounded-[2rem] border border-white/70 bg-graphite p-5 text-white shadow-premium">
+      <div className="mb-5 overflow-hidden rounded-[2rem] border border-orange-500/20 bg-white p-5 text-zinc-900 shadow-sm">
         <div className="mb-8 flex items-start justify-between">
-          <div className="rounded-2xl bg-white/10 p-2.5 backdrop-blur">
-            <ShieldCheck className="h-5 w-5 text-orange-200" />
+          <div className="rounded-2xl bg-orange-50 p-2.5">
+            <ShieldCheck className="h-5 w-5 text-primary" />
           </div>
-          <div className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-orange-100/80">
+          <div className="rounded-full border border-orange-500/20 bg-orange-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
             online access
           </div>
         </div>
         <h1 className="max-w-xs text-3xl font-black leading-[0.95] tracking-[-0.06em]">
           Быстрый вход в Апельсин
         </h1>
-        <p className="mt-3 text-sm leading-relaxed text-orange-50/70">
+        <p className="mt-3 text-sm leading-relaxed text-zinc-500">
           Один клик — новый профиль и сразу экран семьи.
         </p>
       </div>
@@ -156,13 +156,13 @@ function LoginForm() {
       <Card>
         <CardContent className="space-y-4 p-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-zinc-500">E-mail</label>
+            <label className="mb-1 block text-xs font-medium text-zinc-500">Номер телефона</label>
             <Input
               value={login}
               onChange={(e) => setLogin(e.target.value)}
-              placeholder="name@mail.ru"
-              type="email"
-              autoComplete="email"
+              placeholder="+7 (999) 000-00-00"
+              type="tel"
+              autoComplete="tel"
             />
             <p className="mt-1 text-[11px] leading-relaxed text-zinc-400">Тот же формат, что в профиле / выписке.</p>
           </div>
