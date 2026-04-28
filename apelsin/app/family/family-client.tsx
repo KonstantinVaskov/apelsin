@@ -24,7 +24,7 @@ import { Progress } from "@/components/ui/progress";
 import { formatBankPersonName } from "@/lib/person-name";
 import { formatMoney, formatSqliteDateTime } from "@/lib/format";
 import { apiJson, ApiError } from "@/lib/api-client";
-import { FAMILY_SPEND_PER_MEMBER_THRESHOLDS_RUB } from "@/lib/constants";
+import { FAMILY_SPEND_THRESHOLDS_RUB } from "@/lib/constants";
 
 type Me = { id: string; login: string; firstName: string; lastName: string };
 
@@ -77,9 +77,9 @@ const errRu: Record<string, string> = {
   action: "Неверный запрос",
   amount: "Сумма не подходит",
   code_not_found: "Код не найден",
-  family_full: "Семья заполнена (5 участников)",
+  family_full: "Семья заполнена (12 участников)",
   family_closed: "Семья закрыта для вступлений по коду",
-  squad_full: "Семья заполнена (5 участников)",
+  squad_full: "Семья заполнена (12 участников)",
   already_member: "Уже в списке",
   unauthorized: "Нужен вход",
   user: "Профиль не найден",
@@ -233,24 +233,24 @@ export function FamilyClient() {
 
   const thresholds = state.thresholdsRub?.length
     ? state.thresholdsRub
-    : FAMILY_SPEND_PER_MEMBER_THRESHOLDS_RUB.map((x) => x * (state.inFamily ? state.family.memberCount : 1));
+    : [...FAMILY_SPEND_THRESHOLDS_RUB];
 
   return (
     <MobileShell className="family-page">
       <div className="mb-3 flex items-start justify-between gap-2">
         <p className="mb-2">
-          <Link href="/" className="text-sm font-medium text-orange-100/70 underline decoration-orange-200/30 underline-offset-4 hover:text-orange-100">
+          <Link href="/" className="text-sm font-medium text-orange-600 underline decoration-orange-500/30 underline-offset-4 hover:text-orange-500">
             ← На главную
           </Link>
         </p>
-        <div className="rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-right text-xs text-orange-50/70 backdrop-blur-xl">
-          <p className="max-w-[14rem] truncate text-[11px] font-semibold leading-tight text-white">
+        <div className="rounded-2xl border border-orange-500/20 bg-white/80 px-3 py-2 text-right text-xs text-zinc-600 backdrop-blur-xl">
+          <p className="max-w-[14rem] truncate text-[11px] font-semibold leading-tight text-zinc-900">
             {formatBankPersonName(me)}
           </p>
-          <p className="max-w-[14rem] truncate font-mono text-[10px] text-orange-100/50">{me.login}</p>
+          <p className="max-w-[14rem] truncate font-mono text-[10px] text-zinc-500">{me.login}</p>
           <button
             type="button"
-            className="mt-0.5 inline-flex items-center gap-1 text-orange-100/60 hover:text-orange-100"
+            className="mt-0.5 inline-flex items-center gap-1 text-zinc-400 hover:text-orange-500"
             onClick={() => void logout()}
             disabled={busy}
           >
@@ -259,20 +259,20 @@ export function FamilyClient() {
           </button>
         </div>
       </div>
-      <div className="mb-4 inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-100/80 backdrop-blur-xl">
+      <div className="mb-4 inline-flex items-center rounded-full border border-orange-500/20 bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-orange-600 backdrop-blur-xl">
         Апельсин · X5
       </div>
-      <h1 className="mb-1 font-black tracking-[-0.06em] text-white" style={{ fontSize: "clamp(2.4rem, 11vw, 3.5rem)" }}>
+      <h1 className="mb-1 font-black tracking-[-0.06em] text-zinc-900" style={{ fontSize: "clamp(2.4rem, 11vw, 3.5rem)" }}>
         Семья
       </h1>
-      <p className="mb-3 text-sm font-medium leading-relaxed text-orange-50/70">Семейный счёт, уровень кэшбэка и бонусы для всех.</p>
-      <details className="mb-5 rounded-2xl border border-white/10 bg-white/10 px-3 py-2 text-xs text-orange-50/70 shadow-premium backdrop-blur-xl">
-        <summary className="cursor-pointer list-none font-semibold text-orange-50 outline-none marker:hidden [&::-webkit-details-marker]:hidden">
-          <span className="underline decoration-orange-200/30 underline-offset-2">Как работает программа</span>
+      <p className="mb-3 text-sm font-medium leading-relaxed text-zinc-600">Семейный счёт, уровень кэшбэка и бонусы для всех.</p>
+      <details className="mb-5 rounded-2xl border border-orange-500/20 bg-white/80 px-3 py-2 text-xs text-zinc-600 shadow-sm backdrop-blur-xl">
+        <summary className="cursor-pointer list-none font-semibold text-zinc-900 outline-none marker:hidden [&::-webkit-details-marker]:hidden">
+          <span className="underline decoration-orange-500/30 underline-offset-2">Как работает программа</span>
         </summary>
-        <p className="mt-2 border-t border-white/10 pt-2 leading-relaxed">
-          Создайте семью, пригласите участников и суммируйте покупки. Уровень считается по средним тратам на человека:
-          3 000 ₽, 5 000 ₽ и 10 000 ₽.
+        <p className="mt-2 border-t border-orange-500/10 pt-2 leading-relaxed">
+          Создайте семью, пригласите участников (до 12 человек) и суммируйте покупки. Уровень считается по общим тратам семьи:
+          10 000 ₽, 30 000 ₽ и 50 000 ₽. Чем больше общие траты — тем выше кэшбэк у всех! Баллы бессрочные, никаких скрытых списаний.
         </p>
       </details>
 
@@ -304,11 +304,6 @@ export function FamilyClient() {
         />
       ) : (
         <div className="space-y-4">
-          <div className="flex justify-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-[2rem] border border-white/15 bg-white/10 text-4xl shadow-premium backdrop-blur-xl" aria-hidden>
-              🧾
-            </div>
-          </div>
           <Card className="bg-white/90">
             <CardContent className="p-4">
               <p className="text-sm font-black text-zinc-900">Создать семью</p>
@@ -406,39 +401,39 @@ function FamilyView({
   return (
     <div className="space-y-5">
       <div className="relative">
-        <Card className="overflow-hidden border-white/15 bg-white/[0.12] text-white shadow-premium">
+        <Card className="overflow-hidden border-orange-500/20 bg-white shadow-premium">
           <CardContent className="relative p-4">
-            <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-primary/35 blur-3xl" />
-            <div className="absolute -bottom-24 left-4 h-56 w-56 rounded-full bg-savings/20 blur-3xl" />
+            <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
+            <div className="absolute -bottom-24 left-4 h-56 w-56 rounded-full bg-savings/10 blur-3xl" />
             <div className="relative">
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-orange-100/60">Семейный счёт за месяц</p>
-            <p className="mt-2 font-mono text-4xl font-black tabular-nums leading-none text-orange-100">
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-500">Семейный счёт за месяц</p>
+            <p className="mt-2 font-mono text-4xl font-black tabular-nums leading-none text-zinc-900">
               {formatMoney(family.totalMonthQrSpendRub)}
             </p>
             <div className="mt-2 flex flex-wrap gap-2 text-[11px] text-zinc-600">
               <span className="rounded-full bg-primary px-3 py-1 font-black text-white shadow-glow">
                 Уровень {family.familyLevel}
               </span>
-              <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-orange-50/80 backdrop-blur">
-                на человека: <span className="font-mono text-orange-100">{formatMoney(family.avgMonthSpendPerMemberRub)}</span>
+              <span className="rounded-full border border-orange-500/20 bg-orange-50 px-3 py-1 text-orange-800 backdrop-blur">
+                общий счёт: <span className="font-mono text-orange-600">{formatMoney(family.totalMonthQrSpendRub)}</span>
               </span>
             </div>
             {t ? (
               <>
-                <p className="mb-1.5 mt-4 text-[11px] font-medium text-orange-50/70">
-                  до порога <span className="font-mono font-semibold text-orange-100">{formatMoney(t)}</span>
+                <p className="mb-1.5 mt-4 text-[11px] font-medium text-zinc-500">
+                  до порога <span className="font-mono font-semibold text-zinc-900">{formatMoney(t)}</span>
                 </p>
                 <Progress
                   value={pct}
-                  className="h-3 rounded-full border border-white/10 bg-white/10"
-                  indicatorClassName="from-orange-200 via-primary to-savings"
+                  className="h-3 rounded-full border border-orange-500/10 bg-orange-500/10"
+                  indicatorClassName="from-orange-400 via-primary to-savings"
                 />
               </>
             ) : (
-              <p className="mt-4 text-xs font-semibold text-orange-100">Семья достигла верхнего уровня</p>
+              <p className="mt-4 text-xs font-semibold text-primary">Семья достигла верхнего уровня</p>
             )}
-            <p className="mt-4 flex items-start gap-2 rounded-2xl border border-white/10 bg-white/10 p-3 text-sm font-medium leading-snug text-orange-50/90 backdrop-blur">
-              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-orange-200" />
+            <p className="mt-4 flex items-start gap-2 rounded-2xl border border-orange-500/20 bg-orange-50 p-3 text-sm font-medium leading-snug text-zinc-800 backdrop-blur">
+              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               {family.familyLine}
             </p>
             </div>
@@ -447,8 +442,8 @@ function FamilyView({
       </div>
 
       <div>
-        <p className="mb-2 text-sm font-black text-orange-50">
-          Участники <span className="font-mono text-orange-200">({family.memberCount}/{maxMembers})</span>
+        <p className="mb-2 text-sm font-black text-zinc-900">
+          Участники <span className="font-mono text-primary">({family.memberCount}/{maxMembers})</span>
         </p>
         <ul className="space-y-2">
           {family.members.map((m, idx) => {
@@ -456,28 +451,28 @@ function FamilyView({
             return (
               <li
                 key={m.id}
-                className="flex items-center justify-between rounded-[1.35rem] border border-white/10 bg-white/[0.12] p-3 shadow-[0_18px_46px_-34px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+                className="flex items-center justify-between rounded-[1.35rem] border border-orange-500/20 bg-white p-3 shadow-sm backdrop-blur-xl"
               >
                 <div className="flex min-w-0 items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-200 to-primary font-black text-graphite shadow-glow">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-orange-200 font-black text-orange-900 shadow-sm">
                     {m.label.slice(0, 1).toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                  <p className="truncate font-bold text-white">{m.label}</p>
-                  <p className="mt-0.5 text-[11px] text-orange-50/60">
+                  <p className="truncate font-bold text-zinc-900">{m.label}</p>
+                  <p className="mt-0.5 text-[11px] text-zinc-500">
                     {m.isLeader ? "Организатор" : "Участник"} · покупки{" "}
-                    <span className="font-mono tabular-nums text-orange-100">{formatMoney(m.monthQrSpendRub)}</span>
+                    <span className="font-mono tabular-nums text-zinc-800">{formatMoney(m.monthQrSpendRub)}</span>
                   </p>
                   </div>
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-1">
                   {m.isLeader ? (
-                    <Badge className="border border-orange-200/20 bg-orange-200/15 text-[10px] font-bold text-orange-100">
+                    <Badge className="border border-orange-500/20 bg-orange-50 text-[10px] font-bold text-primary">
                       орг
                     </Badge>
                   ) : null}
                   {fake ? (
-                    <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-orange-100/70">
+                    <span className="rounded-full border border-orange-500/20 bg-orange-50 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-primary">
                       тест
                     </span>
                   ) : null}
@@ -488,7 +483,7 @@ function FamilyView({
           {Array.from({ length: family.openSlots }).map((_, i) => (
             <li
               key={`open-${i}`}
-              className="rounded-[1.35rem] border border-dashed border-white/20 bg-white/[0.06] p-3 text-sm text-orange-50/50"
+              className="rounded-[1.35rem] border border-dashed border-orange-500/30 bg-orange-50/50 p-3 text-sm text-zinc-400"
             >
               Свободное место — отправьте приглашение ниже
             </li>
@@ -496,11 +491,11 @@ function FamilyView({
         </ul>
       </div>
 
-      <Card className="border-white/15 bg-white/[0.12] text-white">
+      <Card className="border-orange-500/20 bg-white shadow-sm">
         <CardContent className="space-y-2 p-4">
-          <p className="text-sm font-black text-orange-50">Код и ссылка</p>
-          <p className="font-mono text-2xl font-black tracking-wide text-orange-200">{family.inviteCode}</p>
-          <p className="break-all font-mono text-[10px] leading-relaxed text-orange-50/50">{family.inviteLink}</p>
+          <p className="text-sm font-black text-zinc-900">Код и ссылка</p>
+          <p className="font-mono text-2xl font-black tracking-wide text-primary">{family.inviteCode}</p>
+          <p className="break-all font-mono text-[10px] leading-relaxed text-zinc-500">{family.inviteLink}</p>
           <div className="flex flex-wrap gap-2 pt-1">
             <Button type="button" size="sm" className="gap-2" onClick={() => onCopy(family.inviteLink)}>
               <Link2 className="h-4 w-4" />
@@ -515,24 +510,24 @@ function FamilyView({
       </Card>
 
       {activity.length > 0 ? (
-        <details className="group rounded-[1.35rem] border border-white/10 bg-white/[0.1] shadow-premium backdrop-blur-xl open:shadow-md">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-orange-50 marker:hidden [&::-webkit-details-marker]:hidden">
-            <span>Журнал <span className="font-mono text-orange-100/50">({activity.length})</span></span>
-            <span className="text-xs font-normal text-orange-100/50 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
+        <details className="group rounded-[1.35rem] border border-orange-500/20 bg-white shadow-sm backdrop-blur-xl open:shadow-md">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-zinc-900 marker:hidden [&::-webkit-details-marker]:hidden">
+            <span>Журнал <span className="font-mono text-zinc-500">({activity.length})</span></span>
+            <span className="text-xs font-normal text-zinc-400 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
               ▼
             </span>
           </summary>
-          <div className="border-t border-white/10 px-2 pb-2">
+          <div className="border-t border-orange-500/10 px-2 pb-2">
             <ul className="max-h-48 space-y-0 overflow-y-auto scrollbar-thin sm:max-h-64">
               {activity.map((row) => (
                 <li
                   key={row.id}
-                  className="flex gap-2 border-b border-white/10 py-2 text-xs last:border-b-0"
+                  className="flex gap-2 border-b border-orange-500/10 py-2 text-xs last:border-b-0"
                 >
-                  <span className="w-[4.5rem] shrink-0 font-mono text-[10px] text-orange-100/40">
+                  <span className="w-[4.5rem] shrink-0 font-mono text-[10px] text-zinc-400">
                     {formatSqliteDateTime(row.at)}
                   </span>
-                  <span className="min-w-0 leading-snug text-orange-50/70">{row.line}</span>
+                  <span className="min-w-0 leading-snug text-zinc-700">{row.line}</span>
                 </li>
               ))}
             </ul>
@@ -540,30 +535,30 @@ function FamilyView({
         </details>
       ) : null}
 
-      <details className="group rounded-[1.35rem] border border-dashed border-white/20 bg-white/[0.08] shadow-premium backdrop-blur-xl open:border-solid">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-orange-50/75 marker:hidden [&::-webkit-details-marker]:hidden">
+      <details className="group rounded-[1.35rem] border border-dashed border-orange-500/30 bg-orange-50/50 shadow-sm backdrop-blur-xl open:border-solid">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-zinc-600 marker:hidden [&::-webkit-details-marker]:hidden">
           <span>
             Тестовые действия{" "}
-            <span className="rounded-full bg-orange-200/15 px-1.5 py-0.5 text-[9px] font-mono font-bold normal-case tracking-normal text-orange-100">
+            <span className="rounded-full bg-orange-500/10 px-1.5 py-0.5 text-[9px] font-mono font-bold normal-case tracking-normal text-primary">
               тест
             </span>
           </span>
-          <span className="text-orange-100/50 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
+          <span className="text-zinc-400 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
             ▼
           </span>
         </summary>
-        <div className="border-t border-white/10 p-3 pt-2">
+        <div className="border-t border-orange-500/10 p-3 pt-2">
           <div className="flex flex-col gap-2">
             <div>
-              <label className="mb-1 block text-[10px] font-medium text-orange-50/70">Сумма операции, ₽ (как в выписке / пуше банка)</label>
+              <label className="mb-1 block text-[10px] font-medium text-zinc-600">Сумма операции, ₽ (как в выписке / пуше банка)</label>
               <Input
-                className="h-10 font-mono tabular-nums"
+                className="h-10 font-mono tabular-nums bg-white border-orange-500/20"
                 inputMode="decimal"
                 placeholder="например 1888 или пусто = случайная для теста"
                 value={qrAmount}
                 onChange={(e) => setQrAmount(e.target.value)}
               />
-              <p className="mt-1 text-[10px] leading-relaxed text-orange-50/55">
+              <p className="mt-1 text-[10px] leading-relaxed text-zinc-500">
                 Здесь можно задать сумму вручную. В продукте она придёт из данных банка по факту покупки. Сумма добавляется
                 к вашим личным тратам за месяц и учитывается в семейном счёте.
               </p>
@@ -592,7 +587,7 @@ function FamilyView({
               <Button
                 type="button"
                 variant="outline"
-                className="h-10 gap-1 font-semibold"
+                className="h-10 gap-1 font-semibold border-orange-500/20 text-zinc-700 hover:bg-orange-50"
                 disabled={busy}
                 onClick={onResetMySpend}
               >
@@ -602,7 +597,7 @@ function FamilyView({
             </div>
             <Button
               type="button"
-              className="h-10 w-full gap-2 border border-red-200/30 bg-red-50/90 font-bold text-red-950 hover:bg-red-100/90"
+              className="h-10 w-full gap-2 border border-red-200/30 bg-red-50/90 font-bold text-red-700 hover:bg-red-100/90"
               disabled={busy}
               onClick={onDemoResetFull}
             >
@@ -610,7 +605,7 @@ function FamilyView({
               Сбросить тестовые данные
             </Button>
           </div>
-          <p className="mt-2 text-[11px] leading-relaxed text-orange-50/55">
+          <p className="mt-2 text-[11px] leading-relaxed text-zinc-500">
             Полный сброс: ваши траты обнуляются, тестовые персонажи удаляются. Реальные участники не затрагиваются.
           </p>
         </div>
@@ -619,11 +614,11 @@ function FamilyView({
       <Button
         type="button"
         variant="outline"
-        className="h-11 w-full border-white/20 bg-white/10 font-semibold text-orange-50 hover:bg-white/15"
+        className="h-11 w-full border-orange-500/20 bg-white font-semibold text-zinc-900 hover:bg-orange-50"
         disabled={busy}
         onClick={onLeave}
       >
-        <UserMinus className="mr-2 h-4 w-4" />
+        <UserMinus className="mr-2 h-4 w-4 text-zinc-500" />
         Покинуть семью
       </Button>
     </div>

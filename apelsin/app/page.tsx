@@ -71,8 +71,8 @@ export default function LandingPage() {
           variants={fadeUp}
         >
           «Апельсин Пэй» переводит оплату с картовского эквайринга (≈1,5–3%) на СБП по QR (≈0,4–0,7%). Разница
-          в комиссиях X5 — в бонусы. Семья суммирует покупки участников: чем выше траты
-          на человека за месяц, тем выше общий уровень кэшбэка и бонусов.
+          в комиссиях X5 — в бонусы. Семья суммирует покупки участников: чем выше общие траты
+          за месяц, тем выше общий уровень кэшбэка и бонусов. Баллы бессрочные, без скрытых списаний.
         </motion.p>
 
         <motion.div custom={3} initial="initial" animate="animate" variants={fadeUp} className="mb-6">
@@ -114,8 +114,8 @@ export default function LandingPage() {
             { icon: QrCode, t: "Оплата в сети X5 по QR", d: "Один сценарий — проще согласовать в команде" },
             {
               icon: Users,
-              t: "Семья и пороги 3/5/10 тыс. ₽",
-              d: "Уровень открывает категории повышенного кэшбэка и бонусные категории для всех",
+              t: "Семья и пороги 10/30/50 тыс. ₽",
+              d: "Уровень открывает категории повышенного кэшбэка и бонусы партнеров (DDX, Билайн) для всех",
             },
           ].map((row) => (
             <div
@@ -135,7 +135,29 @@ export default function LandingPage() {
 
         <OrangeCardProgram />
 
-        <motion.div custom={5} initial="initial" animate="animate" variants={fadeUp} className="mt-auto">
+        <motion.div custom={5} initial="initial" animate="animate" variants={fadeUp} className="mb-8">
+          <h3 className="mb-4 text-center text-xs font-bold uppercase tracking-[0.15em] text-zinc-500">
+            Бонусы от партнёров
+          </h3>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="rounded-[1.35rem] border border-orange-500/20 bg-white/75 p-4 shadow-sm backdrop-blur-xl">
+              <p className="font-black text-zinc-900">DDX Fitness</p>
+              <ul className="mt-2 space-y-1 text-[11px] text-zinc-600">
+                <li>• Скидки на абонементы</li>
+                <li>• Протеиновые батончики</li>
+              </ul>
+            </div>
+            <div className="rounded-[1.35rem] border border-orange-500/20 bg-white/75 p-4 shadow-sm backdrop-blur-xl">
+              <p className="font-black text-zinc-900">Билайн</p>
+              <ul className="mt-2 space-y-1 text-[11px] text-zinc-600">
+                <li>• Бесплатные ГБ и минуты</li>
+                <li>• Скидки на тарифы</li>
+              </ul>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div custom={6} initial="initial" animate="animate" variants={fadeUp} className="mt-auto">
           <Button asChild size="lg" className="w-full text-base">
             <Link href="/login?next=/family">
               Открыть Апельсин

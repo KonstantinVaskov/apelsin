@@ -1,7 +1,7 @@
 import type { PublicUser, SessionUser, Family } from "@/lib/types";
 import {
   FAMILY_LEVEL_BONUSES,
-  FAMILY_SPEND_PER_MEMBER_THRESHOLDS_RUB,
+  FAMILY_SPEND_THRESHOLDS_RUB,
   MAX_FAMILY_MEMBERS,
 } from "@/lib/constants";
 import { diskResetAllData, getDiskFamilies, replaceDiskFamilies } from "@/lib/apelsin-disk";
@@ -265,38 +265,35 @@ function round2(n: number) {
 }
 
 function familySpendThresholds(memberCount: number) {
-  const count = Math.max(1, memberCount);
-  return FAMILY_SPEND_PER_MEMBER_THRESHOLDS_RUB.map((x) => x * count);
+  return [...FAMILY_SPEND_THRESHOLDS_RUB];
 }
 
 function familyLevelFromTotal(total: number, memberCount: number) {
-  const count = Math.max(1, memberCount);
-  const avg = round2(total / count);
-  const [level1, level2, level3] = FAMILY_SPEND_PER_MEMBER_THRESHOLDS_RUB;
-  if (avg < level1) {
+  const [level1, level2, level3] = FAMILY_SPEND_THRESHOLDS_RUB;
+  if (total < level1) {
     return {
       tier: 0 as const,
-      avg,
-      line: `Уровень 0: ${FAMILY_LEVEL_BONUSES[0]}. До 1 уровня нужно ${level1.toLocaleString("ru-RU")} ₽ на человека`,
+      avg: total,
+      line: `Уровень 0: ${FAMILY_LEVEL_BONUSES[0]}. До 1 уровня нужно ${level1.toLocaleString("ru-RU")} ₽ на семью`,
     };
   }
-  if (avg < level2) {
+  if (total < level2) {
     return {
       tier: 1 as const,
-      avg,
+      avg: total,
       line: `Уровень 1: ${FAMILY_LEVEL_BONUSES[1]}`,
     };
   }
-  if (avg < level3) {
+  if (total < level3) {
     return {
       tier: 2 as const,
-      avg,
+      avg: total,
       line: `Уровень 2: ${FAMILY_LEVEL_BONUSES[2]}`,
     };
   }
   return {
     tier: 3 as const,
-    avg,
+    avg: total,
     line: `Уровень 3: ${FAMILY_LEVEL_BONUSES[3]}`,
   };
 }

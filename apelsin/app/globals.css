@@ -61,12 +61,12 @@ body {
 
 .family-page,
 .squad-page {
-  background-color: #17110e;
+  background-color: #ffffff;
   background-image:
-    radial-gradient(circle at 14% 4%, rgba(255, 107, 0, 0.26) 0, transparent 28%),
-    radial-gradient(circle at 90% 18%, rgba(255, 199, 120, 0.18) 0, transparent 25%),
-    linear-gradient(160deg, #201612 0%, #120f0e 48%, #241914 100%);
-  color: #fff7ed;
+    radial-gradient(circle at 14% 4%, rgba(255, 107, 0, 0.15) 0, transparent 28%),
+    radial-gradient(circle at 90% 18%, rgba(255, 159, 67, 0.1) 0, transparent 25%),
+    linear-gradient(160deg, #fffcf9 0%, #fff5eb 48%, #fff0e0 100%);
+  color: #1a1a1a;
 }
 
 .premium-grid {

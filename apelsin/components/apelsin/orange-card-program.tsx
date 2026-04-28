@@ -56,7 +56,7 @@ export function OrangeCardProgram() {
           </p>
           <p className="mx-auto mt-2 text-xs leading-relaxed text-zinc-500">
             Участие через группу «Семья»: <span className="font-medium text-zinc-700">нулевой уровень по карте</span> и{" "}
-            <span className="font-medium text-zinc-700">3 уровня по тратам на человека</span>.
+            <span className="font-medium text-zinc-700">3 уровня по общим тратам семьи</span>.
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export function OrangeCardProgram() {
             <StepCard
               n={4}
               title="Получайте больше"
-              body="Чем выше общий объём трат на человека, тем выше уровень кэшбэка и бонусов для всех."
+              body="Чем выше общий объём трат семьи, тем выше уровень кэшбэка и бонусов для всех."
               icon={Users2}
               accent="from-violet-500/90 to-primary"
             />
@@ -104,7 +104,7 @@ export function OrangeCardProgram() {
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-100/60">уровни семьи</p>
               <p className="mt-1 text-xl font-black tracking-tight">От карты до максимума</p>
             </div>
-            <div className="rounded-2xl bg-white/10 px-3 py-2 text-right backdrop-blur">
+            <div className="rounded-2xl bg-white/10 px-3 py-2 text-right backdrop-blur shrink-0">
               <p className="font-mono text-2xl font-black text-orange-200">0 → 3</p>
               <p className="text-[10px] text-orange-100/60">уровня</p>
             </div>
@@ -145,7 +145,7 @@ export function OrangeCardProgram() {
               pct="сумма"
               bar="w-[66%]"
             />
-            <RoleRow step={3} title="Расчёт на человека" desc="Порог уровня равен тратам на человека, умноженным на число участников." pct="₽/чел." bar="w-full" />
+            <RoleRow step={3} title="Общий счёт семьи" desc="Порог уровня зависит только от общей суммы покупок всей семьи за месяц." pct="сумма" bar="w-full" />
           </div>
           <p className="mt-4 rounded-2xl border border-dashed border-zinc-200/80 bg-zinc-50/80 px-3 py-2.5 text-center text-[11px] leading-relaxed text-zinc-500">
             Уровень семьи повышается только от <span className="font-medium text-zinc-700">общих покупок</span> и
@@ -168,21 +168,21 @@ export function OrangeCardProgram() {
             <FamilyTier
               tier={1}
               title="Семья 1 уровня"
-              desc={`От 3 000 ₽ на человека: ${FAMILY_LEVEL_BONUSES[1]}.`}
+              desc={`От 10 000 ₽ общих трат: ${FAMILY_LEVEL_BONUSES[1]}.`}
             />
             <FamilyTier
               tier={2}
               title="Семья 2 уровня"
-              desc={`От 5 000 ₽ на человека: ${FAMILY_LEVEL_BONUSES[2]}.`}
+              desc={`От 30 000 ₽ общих трат: ${FAMILY_LEVEL_BONUSES[2]}.`}
             />
             <FamilyTier
               tier={3}
               title="Семья 3 уровня"
-              desc={`От 10 000 ₽ на человека: ${FAMILY_LEVEL_BONUSES[3]}.`}
+              desc={`От 50 000 ₽ общих трат: ${FAMILY_LEVEL_BONUSES[3]}.`}
             />
           </div>
           <p className="mt-4 rounded-2xl border border-dashed border-zinc-200/80 bg-zinc-50/80 px-3 py-2.5 text-center text-[11px] leading-relaxed text-zinc-500">
-            Для семьи из 4 человек пороги будут 12 000 ₽, 20 000 ₽ и 40 000 ₽ общего счёта за месяц.
+            Приглашайте до 12 человек в семью, чтобы быстрее достигать максимальных уровней кэшбэка!
           </p>
         </motion.div>
 
@@ -197,10 +197,10 @@ export function OrangeCardProgram() {
             Уровень семьи определяет кэшбэк и бонусы для всех.
           </p>
           <p className="mx-auto mt-2 max-w-md text-xs leading-relaxed text-zinc-600 sm:mt-3 sm:text-sm">
-            Чем больше общий объём трат на человека, тем выше общий уровень программы.
+            Чем больше общий объём трат семьи, тем выше общий уровень программы.
           </p>
           <p className="mt-3 text-[11px] text-zinc-500 sm:text-xs">
-            карта у всех · 3 000 ₽ · 5 000 ₽ · 10 000 ₽ на человека
+            карта у всех · 10 000 ₽ · 30 000 ₽ · 50 000 ₽ на всю семью
           </p>
         </motion.div>
       </div>
