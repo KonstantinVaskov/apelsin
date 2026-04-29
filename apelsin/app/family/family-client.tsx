@@ -67,8 +67,6 @@ type StateIn = {
 
 type FamilyState = StateOut | StateIn;
 
-type ActivityRow = { id: number; at: string; line: string };
-
 const errRu: Record<string, string> = {
   not_in_family: "Сначала вступи в семью или создай её",
   not_in_squad: "Сначала вступи в семью или создай её",
@@ -104,7 +102,6 @@ export function FamilyClient() {
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
   const [joinCode, setJoinCode] = useState("");
-  const [activity, setActivity] = useState<ActivityRow[]>([]);
 
   useEffect(() => {
     const q = searchParams.get("code");
@@ -124,10 +121,9 @@ export function FamilyClient() {
         }
         setMe(m.user);
         try {
-          const r = await apiJson<{ state: FamilyState; activity?: ActivityRow[] }>("/api/family");
+          const r = await apiJson<{ state: FamilyState }>("/api/family");
           if (!cancelled) {
             setState(r.state);
-            setActivity(r.activity ?? []);
           }
         } catch (e) {
           if (cancelled) return;
@@ -159,12 +155,11 @@ export function FamilyClient() {
     setMsg(null);
     setBusy(true);
     try {
-      const r = await apiJson<{ state: FamilyState; activity?: ActivityRow[] }>("/api/family", {
+      const r = await apiJson<{ state: FamilyState }>("/api/family", {
         method: "POST",
         body: JSON.stringify(body),
       });
       setState(r.state);
-      setActivity(r.activity ?? []);
     } catch (e) {
       const key = e instanceof ApiError ? (e.code ?? e.message) : e instanceof Error ? e.message : "";
       setMsg(errRu[key] ?? (key && key.length < 200 ? key : "Ошибка"));
@@ -281,7 +276,6 @@ export function FamilyClient() {
           family={state.family}
           maxMembers={state.maxMembers}
           thresholds={thresholds}
-          activity={activity}
           busy={busy}
           copied={copied}
           onCopy={copyLink}
@@ -379,7 +373,6 @@ function FamilyView({
   family,
   maxMembers,
   thresholds,
-  activity,
   busy,
   copied,
   onCopy,
@@ -395,7 +388,6 @@ function FamilyView({
   family: FamilyIn;
   maxMembers: number;
   thresholds: number[];
-  activity: ActivityRow[];
   busy: boolean;
   copied: boolean;
   onCopy: (l: string) => void;
@@ -437,7 +429,7 @@ function FamilyView({
             {t ? (
               <>
                 <p className="mb-1.5 mt-4 text-[11px] font-medium text-zinc-500">
-                  до порога <span className="font-mono font-semibold text-zinc-900">{formatMoney(t)}</span>
+                  до следующего уровня осталось <span className="font-mono font-semibold text-zinc-900">{formatMoney(t - family.totalMonthQrSpendRub)}</span>
                 </p>
                 <Progress
                   value={pct}
@@ -476,8 +468,13 @@ function FamilyView({
                   <div className="min-w-0">
                   <p className="truncate font-bold text-zinc-900">{m.label}</p>
                   <p className="mt-0.5 text-[11px] text-zinc-500">
-                    {m.isLeader ? "Организатор" : "Участник"} · покупки{" "}
-                    <span className="font-mono tabular-nums text-zinc-800">{formatMoney(m.monthQrSpendRub)}</span>
+                    {m.isLeader ? "Организатор" : "Участник"}
+                    {m.isYou && (
+                      <>
+                        {" · ваши покупки "}
+                        <span className="font-mono tabular-nums text-zinc-800">{formatMoney(m.monthQrSpendRub)}</span>
+                      </>
+                    )}
                   </p>
                   </div>
                 </div>
@@ -535,31 +532,6 @@ function FamilyView({
         </CardContent>
       </Card>
 
-      {activity.length > 0 ? (
-        <details className="group rounded-[1.35rem] border border-orange-500/20 bg-white shadow-sm backdrop-blur-xl open:shadow-md">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-zinc-900 marker:hidden [&::-webkit-details-marker]:hidden">
-            <span>Журнал <span className="font-mono text-zinc-500">({activity.length})</span></span>
-            <span className="text-xs font-normal text-zinc-400 group-open:rotate-180 motion-safe:transition-transform" aria-hidden>
-              ▼
-            </span>
-          </summary>
-          <div className="border-t border-orange-500/10 px-2 pb-2">
-            <ul className="max-h-48 space-y-0 overflow-y-auto scrollbar-thin sm:max-h-64">
-              {activity.map((row) => (
-                <li
-                  key={row.id}
-                  className="flex gap-2 border-b border-orange-500/10 py-2 text-xs last:border-b-0"
-                >
-                  <span className="w-[4.5rem] shrink-0 font-mono text-[10px] text-zinc-400">
-                    {formatSqliteDateTime(row.at)}
-                  </span>
-                  <span className="min-w-0 leading-snug text-zinc-700">{row.line}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </details>
-      ) : null}
 
       <details className="group rounded-[1.35rem] border border-dashed border-orange-500/30 bg-orange-50/50 shadow-sm backdrop-blur-xl open:border-solid">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-zinc-600 marker:hidden [&::-webkit-details-marker]:hidden">

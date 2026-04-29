@@ -31,9 +31,9 @@ function unauthorized() {
 
 function jsonFamily(userId: string) {
   const state = getFamilyState(userId);
-  if (!state) return { state: null as ReturnType<typeof getFamilyState>, activity: [] };
-  if (!state.inFamily) return { state, activity: [] };
-  return { state, activity: getFamilyActivityLog(state.family.id) };
+  if (!state) return { state: null as ReturnType<typeof getFamilyState> };
+  if (!state.inFamily) return { state };
+  return { state };
 }
 
 export async function GET() {

@@ -305,7 +305,7 @@ function memberRows(viewerId: string, fam: Family) {
       label: isYou ? "Вы" : m ? formatBankPersonName(m) : `Участник ${peer}`,
       isYou,
       isLeader: mid === fam.leaderId,
-      monthQrSpendRub: round2(m?.monthQrSpendRub ?? 0),
+      monthQrSpendRub: isYou ? round2(m?.monthQrSpendRub ?? 0) : 0,
     };
   });
 }
