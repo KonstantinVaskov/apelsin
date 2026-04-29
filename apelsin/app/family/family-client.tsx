@@ -155,7 +155,7 @@ export function FamilyClient() {
     };
   }, [router]);
 
-  async function post(body: { action: string; amountRub?: number; code?: string }) {
+  async function post(body: { action: string; amountRub?: number; code?: string; targetUserId?: string }) {
     setMsg(null);
     setBusy(true);
     try {
@@ -301,6 +301,16 @@ export function FamilyClient() {
               void post({ action: "demo_reset" });
             }
           }}
+          onKick={(targetUserId) => {
+            if (window.confirm("Исключить участника из семьи?")) {
+              void post({ action: "kick", targetUserId });
+            }
+          }}
+          onTransferLeadership={() => {
+            if (window.confirm("Организатор неактивен. Передать роль самого активному участнику?")) {
+              void post({ action: "transfer_leadership" });
+            }
+          }}
         />
       ) : (
         <div className="space-y-4">
@@ -379,6 +389,8 @@ function FamilyView({
   onDemoPeers,
   onResetMySpend,
   onDemoResetFull,
+  onKick,
+  onTransferLeadership,
 }: {
   family: FamilyIn;
   maxMembers: number;
@@ -393,10 +405,14 @@ function FamilyView({
   onDemoPeers: () => void;
   onResetMySpend: () => void;
   onDemoResetFull: () => void;
+  onKick: (userId: string) => void;
+  onTransferLeadership: () => void;
 }) {
   const [qrAmount, setQrAmount] = useState("");
   const t = nextThreshold(family.totalMonthQrSpendRub, thresholds);
   const pct = t ? Math.min(100, (family.totalMonthQrSpendRub / t) * 100) : 100;
+
+  const isViewerLeader = family.members.find((m) => m.isYou)?.isLeader ?? false;
 
   return (
     <div className="space-y-5">
@@ -475,6 +491,16 @@ function FamilyView({
                     <span className="rounded-full border border-orange-500/20 bg-orange-50 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-primary">
                       тест
                     </span>
+                  ) : null}
+                  {isViewerLeader && !m.isYou ? (
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={() => onKick(m.id)}
+                      className="mt-1 text-[10px] font-medium text-red-600 hover:text-red-700 underline decoration-red-200 underline-offset-2"
+                    >
+                      исключить
+                    </button>
                   ) : null}
                 </div>
               </li>
@@ -595,6 +621,16 @@ function FamilyView({
                 Обнулить мои траты
               </Button>
             </div>
+            <Button
+              type="button"
+              variant="outline"
+              className="h-10 w-full gap-2 font-semibold border-orange-500/20 text-zinc-700 hover:bg-orange-50"
+              disabled={busy}
+              onClick={onTransferLeadership}
+            >
+              <Users className="h-4 w-4" />
+              Сменить организатора (тест)
+            </Button>
             <Button
               type="button"
               className="h-10 w-full gap-2 border border-red-200/30 bg-red-50/90 font-bold text-red-700 hover:bg-red-100/90"

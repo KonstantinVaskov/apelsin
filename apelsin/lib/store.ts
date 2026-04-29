@@ -421,6 +421,63 @@ export function joinFamilyByCode(userId: string, code: string) {
 
 /** @deprecated */ export const joinSquadByCode = joinFamilyByCode;
 
+export function kickFamilyMember(leaderId: string, targetUserId: string) {
+  const leader = getUserById(leaderId);
+  if (!leader?.familyId) return { ok: false as const, error: "not_in_family" as const };
+  
+  const f = families.get(leader.familyId);
+  if (!f) return { ok: false as const, error: "not_in_family" as const };
+  
+  if (f.leaderId !== leaderId) {
+    return { ok: false as const, error: "not_leader" as const };
+  }
+  
+  if (leaderId === targetUserId) {
+    return { ok: false as const, error: "cannot_kick_self" as const };
+  }
+  
+  if (!f.memberIds.includes(targetUserId)) {
+    return { ok: false as const, error: "user_not_in_family" as const };
+  }
+
+  f.memberIds = f.memberIds.filter((x) => x !== targetUserId);
+  
+  const targetUser = uget(targetUserId);
+  if (targetUser) {
+    targetUser.familyId = null;
+    persistRegisteredUser(targetUser);
+  }
+  
+  saveFamiliesToDisk();
+  return { ok: true as const };
+}
+
+export function transferLeadership(familyId: string) {
+  const f = families.get(familyId);
+  if (!f) return { ok: false as const, error: "not_in_family" as const };
+  if (f.memberIds.length <= 1) return { ok: false as const, error: "no_other_members" as const };
+
+  let topMemberId = f.memberIds[0];
+  let maxSpend = -1;
+
+  for (const mid of f.memberIds) {
+    if (mid === f.leaderId) continue;
+    const m = uget(mid);
+    if (m && m.monthQrSpendRub > maxSpend) {
+      maxSpend = m.monthQrSpendRub;
+      topMemberId = mid;
+    }
+  }
+
+  if (topMemberId && topMemberId !== f.leaderId) {
+    f.leaderId = topMemberId;
+    saveFamiliesToDisk();
+    return { ok: true as const, newLeaderId: topMemberId };
+  }
+
+  return { ok: false as const, error: "could_not_transfer" as const };
+}
+
 export function leaveFamily(userId: string) {
   const u = getUserById(userId);
   if (!u?.familyId) return { ok: false as const, error: "not_in_family" as const };

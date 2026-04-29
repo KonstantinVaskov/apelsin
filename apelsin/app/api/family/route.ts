@@ -6,6 +6,8 @@ import {
   getUserById,
   initFamiliesFromDisk,
   joinFamilyByCode,
+  kickFamilyMember,
+  transferLeadership,
   leaveFamily,
   recordQrPayment,
   resetMyMonthQrSpend,
@@ -52,9 +54,10 @@ export async function GET() {
 }
 
 type Body = {
-  action?: "create" | "join" | "leave" | "qr" | "demo_peers" | "reset_my_spend" | "demo_reset";
+  action?: "create" | "join" | "leave" | "qr" | "demo_peers" | "reset_my_spend" | "demo_reset" | "kick" | "transfer_leadership";
   amountRub?: number;
   code?: string;
+  targetUserId?: string;
 };
 
 function statusForJoin(
@@ -107,6 +110,25 @@ export async function POST(req: Request) {
       const r = leaveFamily(userId);
       if (!r.ok) return NextResponse.json({ error: r.error }, { status: 400 });
       if (fid) insertFamilyActivity(fid, userId, "member_left");
+      return NextResponse.json(jsonFamily(userId));
+    }
+    if (action === "kick") {
+      if (!body.targetUserId) return NextResponse.json({ error: "missing_target" }, { status: 400 });
+      const r = kickFamilyMember(userId, body.targetUserId);
+      if (!r.ok) return NextResponse.json({ error: r.error }, { status: 400 });
+      const st = getFamilyState(userId);
+      if (st?.inFamily) insertFamilyActivity(st.family.id, userId, "member_kicked");
+      return NextResponse.json(jsonFamily(userId));
+    }
+    if (action === "transfer_leadership") {
+      const stBefore = getFamilyState(userId);
+      const sid = stBefore?.inFamily ? stBefore.family.id : null;
+      if (!sid) return NextResponse.json({ error: "not_in_family" }, { status: 400 });
+      
+      const r = transferLeadership(sid);
+      if (!r.ok) return NextResponse.json({ error: r.error }, { status: 400 });
+      
+      insertFamilyActivity(sid, userId, "leadership_transferred");
       return NextResponse.json(jsonFamily(userId));
     }
     if (action === "qr") {

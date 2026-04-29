@@ -7,6 +7,8 @@ export type FamilyActivityKind =
   | "squad_created"
   | "member_joined"
   | "member_left"
+  | "member_kicked"
+  | "leadership_transferred"
   | "qr_payment"
   | "demo_peers"
   | "reset_my_spend"
@@ -52,6 +54,10 @@ function formatLine(row: {
       return `${who} вступил(а) в семью`;
     case "member_left":
       return `${who} вышел(а) из семьи`;
+    case "member_kicked":
+      return `Организатор исключил(а) участника из семьи`;
+    case "leadership_transferred":
+      return `Роль организатора передана самому активному участнику`;
     case "qr_payment": {
       const a = row.amount_rub != null ? row.amount_rub : 0;
       return `${who} — оплата по QR: ${formatMoney(a)}`;

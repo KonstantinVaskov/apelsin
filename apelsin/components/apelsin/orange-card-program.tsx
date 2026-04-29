@@ -129,7 +129,13 @@ export function OrangeCardProgram() {
               pct="сумма"
               bar="w-[66%]"
             />
-            <RoleRow step={3} title="Общий счёт семьи" desc="Порог уровня зависит только от общей суммы покупок всей семьи за месяц." pct="сумма" bar="w-full" />
+            <RoleRow
+              step={3}
+              title="Уровень семьи"
+              desc="Порог уровня зависит только от общей суммы покупок всей семьи за месяц."
+              pct="уровень"
+              bar="w-full"
+            />
           </div>
           <p className="mt-4 rounded-2xl border border-dashed border-zinc-200/80 bg-zinc-50/80 px-3 py-2.5 text-center text-[11px] leading-relaxed text-zinc-500">
             Уровень семьи повышается только от <span className="font-medium text-zinc-700">общих покупок</span> и
